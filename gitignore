@@ -1,4 +1,4 @@
-.gradle
+.gradle/*
 /local.properties
 /.idea/copyright/*
 /.idea/sonarlint/*
@@ -17,7 +17,7 @@
 /.idea/gradle.xml
 /.idea/modules.xml
 /.idea/uiDesigner.xml
-/.idea
+/.idea/*
 /build
 *.iml
 .DS_Store

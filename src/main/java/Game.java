@@ -10,4 +10,8 @@ public class Game {
             return Winner.PLAYER;
         }
     }
+
+    public boolean isBust(final int card1, final int card2) {
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GameTest {
 
@@ -10,6 +11,17 @@ public class GameTest {
     @Before
     public void setUp() throws Exception {
          game = new Game();
+    }
+
+    @Test
+    public void GivenPlayerIsDealtTwoCards_WhenIsBust_ThenIsNotBust() {
+        // given
+        final int playerCard1 = 3;
+        final int playerCard2 = 2;
+
+        // when
+        // then
+        assertFalse(game.isBust(playerCard1, playerCard2));
     }
 
     @Test
