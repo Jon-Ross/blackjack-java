@@ -22,7 +22,7 @@ public class GameTest {
         final int houseCard2 = 10;
 
         // when
-        final Winner winner = calculateWinner(houseCard1, houseCard2, playerCard1, playerCard2);
+        final Winner winner = determineWinner(houseCard1, houseCard2, playerCard1, playerCard2);
 
         // then
         assertEquals(Winner.HOUSE, winner);
@@ -38,7 +38,7 @@ public class GameTest {
         final int houseCard2 = 10;
 
         // when
-        final Winner winner = calculateWinner(houseCard1, houseCard2, playerCard1, playerCard2);
+        final Winner winner = determineWinner(houseCard1, houseCard2, playerCard1, playerCard2);
 
         // then
         assertEquals(Winner.PLAYER, winner);
@@ -54,13 +54,13 @@ public class GameTest {
         final int houseCard2 = 10;
 
         // when
-        final Winner winner = calculateWinner(houseCard1, houseCard2, playerCard1, playerCard2);
+        final Winner winner = determineWinner(houseCard1, houseCard2, playerCard1, playerCard2);
 
         // then
         assertEquals(Winner.DRAW, winner);
     }
 
-    private Winner calculateWinner(final int houseCard1, final int houseCard2, final int playerCard1, final int playerCard2) {
+    private Winner determineWinner(final int houseCard1, final int houseCard2, final int playerCard1, final int playerCard2) {
         final int houseTotal = houseCard1 + houseCard2;
         final int playerTotal = playerCard1 + playerCard2;
 
