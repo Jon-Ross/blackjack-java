@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GameTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-04-24T11:47:23" hostname="ethan.lau-mbp-C02Z29FULVCG" time="0.002">
+  <properties/>
+  <testcase name="GivenHouseHasAtLeastThresholdAndSameAsPlayer_WhenCalculateWinner_ThenDraw" classname="GameTest" time="0.002"/>
+  <testcase name="GivenHouseHasAtLeastThresholdAndBetterThanPlayer_WhenCalculateWinner_ThenHouseWins" classname="GameTest" time="0.0"/>
+  <testcase name="GivenHouseHasAtLeastThresholdAndWorseThanPlayer_WhenCalculateWinner_ThenPlayerWins" classname="GameTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
