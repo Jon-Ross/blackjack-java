@@ -1,5 +1,11 @@
 public class Game {
 
+    private final Dealer dealer;
+
+    public Game(Dealer dealer) {
+        this.dealer = dealer;
+    }
+
     public Winner determineWinner(final int houseCard1, final int houseCard2, final int playerCard1, final int playerCard2) {
         final int houseTotal = houseCard1 + houseCard2;
         final int playerTotal = playerCard1 + playerCard2;
@@ -12,6 +18,10 @@ public class Game {
     }
 
     public boolean isBust(final int card1, final int card2) {
-        return false;
+        return card1 + card2 > 21;
+    }
+
+    public int dealCard() {
+        return dealer.dealCard();
     }
 }

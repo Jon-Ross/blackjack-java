@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GameTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2020-04-24T12:28:44" hostname="ethan.lau-mbp-C02Z29FULVCG" time="0.003">
+<testsuite name="GameTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-05-01T14:44:19" hostname="ethan.lau-mbp-C02Z29FULVCG" time="0.003">
   <properties/>
-  <testcase name="GivenPlayerIsDealtTwoCards_WhenIsBust_ThenIsNotBust" classname="GameTest" time="0.002"/>
+  <testcase name="GivenPlayerIsDealtTwoCards_WhenIsBust_ThenIsNotBust" classname="GameTest" time="0.001"/>
+  <testcase name="GivenPlayerIsDealtTwoCardsGreaterThan21_WhenIsBust_ThenIsBust" classname="GameTest" time="0.0"/>
   <testcase name="GivenHouseHasAtLeastThresholdAndBetterThanPlayer_WhenDetermineWinner_ThenHouseWins" classname="GameTest" time="0.0"/>
   <testcase name="GivenHouseHasAtLeastThresholdAndSameAsPlayer_WhenDetermineWinner_ThenHouseWins" classname="GameTest" time="0.0"/>
   <testcase name="GivenHouseHasAtLeastThresholdAndWorseThanPlayer_WhenDetermineWinner_ThenPlayerWins" classname="GameTest" time="0.0"/>
