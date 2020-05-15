@@ -1,5 +1,7 @@
 public class Game {
 
+    private static final int BUST_THRESHOLD = 21;
+
     private final Dealer dealer;
 
     public Game(Dealer dealer) {
@@ -18,7 +20,11 @@ public class Game {
     }
 
     public boolean isBust(final int card1, final int card2) {
-        return card1 + card2 > 21;
+        return card1 + card2 > BUST_THRESHOLD;
+    }
+
+    public boolean isBust(final Hand hand) {
+        return hand.sum() > BUST_THRESHOLD;
     }
 
     public int dealCard() {

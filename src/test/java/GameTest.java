@@ -1,4 +1,5 @@
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -41,6 +42,27 @@ public class GameTest {
         // when
         // then
         assertTrue(game.isBust(playerCard1, playerCard2));
+    }
+
+    @Test
+    public void GivenPlayerNotBust_WhenTwist_ThenBust() {
+        // given
+        dealer.addValue(7);
+        dealer.addValue(3);
+        dealer.addValue(11);
+
+        final int playerCard1 = game.dealCard();
+        final int playerCard2 = game.dealCard();
+        final int playerCard3 = game.dealCard();
+
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+        playerHand.addValue(playerCard3);
+
+        // when
+        // then
+        assertFalse(game.isBust(playerHand));
     }
 
     @Test
