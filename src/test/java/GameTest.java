@@ -25,9 +25,13 @@ public class GameTest {
         final int playerCard1 = game.dealCard();
         final int playerCard2 = game.dealCard();
 
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+
         // when
         // then
-        assertFalse(game.isBust(playerCard1, playerCard2));
+        assertFalse(game.isBust(playerHand));
     }
 
     @Test
@@ -39,9 +43,13 @@ public class GameTest {
         final int playerCard1 = game.dealCard();
         final int playerCard2 = game.dealCard();
 
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+
         // when
         // then
-        assertTrue(game.isBust(playerCard1, playerCard2));
+        assertTrue(game.isBust(playerHand));
     }
 
     @Test
@@ -126,5 +134,4 @@ public class GameTest {
         // then
         assertEquals(Winner.HOUSE, winner);
     }
-
 }

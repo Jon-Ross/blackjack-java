@@ -19,10 +19,6 @@ public class Game {
         }
     }
 
-    public boolean isBust(final int card1, final int card2) {
-        return card1 + card2 > BUST_THRESHOLD;
-    }
-
     public boolean isBust(final Hand hand) {
         return hand.sum() > BUST_THRESHOLD;
     }
