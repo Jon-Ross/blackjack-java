@@ -80,14 +80,17 @@ public class GameTest {
         dealer.addValue(10);
         dealer.addValue(9);
         dealer.addValue(10);
-        final int playerCard1 = game.dealCard();
-        final int playerCard2 = game.dealCard();
 
-        final int houseCard1 = game.dealCard();
-        final int houseCard2 = game.dealCard();
+        final Hand playerHand = new Hand();
+        playerHand.addValue(dealer.dealCard());
+        playerHand.addValue(dealer.dealCard());
+
+        final Hand houseHand = new Hand();
+        houseHand.addValue(dealer.dealCard());
+        houseHand.addValue(dealer.dealCard());
 
         // when
-        final Winner winner = game.determineWinner(houseCard1, houseCard2, playerCard1, playerCard2);
+        final Winner winner = game.determineWinner(houseHand, playerHand);
 
         // then
         assertEquals(Winner.HOUSE, winner);
@@ -101,14 +104,16 @@ public class GameTest {
         dealer.addValue(9);
         dealer.addValue(10);
 
-        final int playerCard1 = dealer.dealCard();
-        final int playerCard2 = dealer.dealCard();
+        final Hand playerHand = new Hand();
+        playerHand.addValue(dealer.dealCard());
+        playerHand.addValue(dealer.dealCard());
 
-        final int houseCard1 = dealer.dealCard();
-        final int houseCard2 = dealer.dealCard();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(dealer.dealCard());
+        houseHand.addValue(dealer.dealCard());
 
         // when
-        final Winner winner = game.determineWinner(houseCard1, houseCard2, playerCard1, playerCard2);
+        final Winner winner = game.determineWinner(houseHand, playerHand);
 
         // then
         assertEquals(Winner.PLAYER, winner);
@@ -122,14 +127,16 @@ public class GameTest {
         dealer.addValue(9);
         dealer.addValue(10);
 
-        final int playerCard1 = dealer.dealCard();
-        final int playerCard2 = dealer.dealCard();
+        final Hand playerHand = new Hand();
+        playerHand.addValue(dealer.dealCard());
+        playerHand.addValue(dealer.dealCard());
 
-        final int houseCard1 = dealer.dealCard();
-        final int houseCard2 = dealer.dealCard();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(dealer.dealCard());
+        houseHand.addValue(dealer.dealCard());
 
         // when
-        final Winner winner = game.determineWinner(houseCard1, houseCard2, playerCard1, playerCard2);
+        final Winner winner = game.determineWinner(houseHand, playerHand);
 
         // then
         assertEquals(Winner.HOUSE, winner);
