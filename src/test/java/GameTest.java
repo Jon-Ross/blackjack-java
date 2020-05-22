@@ -134,4 +134,30 @@ public class GameTest {
         // then
         assertEquals(Winner.HOUSE, winner);
     }
+
+    @Test
+    public void GivenHouseHasAtLeastThresholdAndPlayerTwists_WhenDetermineWinner_ThenPlayerWins() {
+        // given
+        dealer.addValue(5);
+        dealer.addValue(6);
+        dealer.addValue(10);
+
+        final Hand playerHand = new Hand();
+        playerHand.addValue(dealer.dealCard());
+        playerHand.addValue(dealer.dealCard());
+        playerHand.addValue(dealer.dealCard());
+
+        dealer.addValue(9);
+        dealer.addValue(8);
+
+        final Hand houseHand = new Hand();
+        houseHand.addValue(dealer.dealCard());
+        houseHand.addValue(dealer.dealCard());
+
+        // when
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+
+        // then
+        assertEquals(Winner.PLAYER, winner);
+    }
 }

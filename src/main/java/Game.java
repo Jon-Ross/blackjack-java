@@ -8,6 +8,14 @@ public class Game {
         this.dealer = dealer;
     }
 
+    public Winner determineWinner(final Hand houseHand, final Hand playerHand) {
+        if (houseHand.sum() >= playerHand.sum()){
+            return Winner.HOUSE;
+        } else {
+            return Winner.PLAYER;
+        }
+    }
+
     public Winner determineWinner(final int houseCard1, final int houseCard2, final int playerCard1, final int playerCard2) {
         final int houseTotal = houseCard1 + houseCard2;
         final int playerTotal = playerCard1 + playerCard2;
