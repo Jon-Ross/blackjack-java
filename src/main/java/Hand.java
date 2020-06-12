@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Hand {
 
@@ -18,5 +19,25 @@ public class Hand {
             total += value;
         }
         return total;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hand hand = (Hand) o;
+        return Objects.equals(cardValues, hand.cardValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardValues);
+    }
+
+    @Override
+    public String toString() {
+        return "Hand{" +
+                "cardValues=" + cardValues +
+                '}';
     }
 }

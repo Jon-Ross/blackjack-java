@@ -22,7 +22,7 @@ public class GameScreenIntegrationTest {
 
         dealer = new DealerMock();
         game = new Game(dealer);
-        presenter = new GamePresenter();
+        presenter = new GamePresenter(game);
     }
 
     @Test
