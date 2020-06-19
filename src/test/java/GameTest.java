@@ -48,17 +48,11 @@ public class GameTest {
     }
 
     @Test
-    public void GivenPlayerIsDealtTwoCards_WhenIsBust_ThenIsNotBust() {
+    public void GivenPlayerIsDealtHand_WhenIsBust_ThenIsNotBust() {
         // given
         dealer.addValue(10);
         dealer.addValue(11);
-
-        final int playerCard1 = game.dealCard();
-        final int playerCard2 = game.dealCard();
-
-        final Hand playerHand = new Hand();
-        playerHand.addValue(playerCard1);
-        playerHand.addValue(playerCard2);
+        final Hand playerHand = game.dealHand();
 
         // when
         // then
@@ -66,17 +60,12 @@ public class GameTest {
     }
 
     @Test
-    public void GivenPlayerIsDealtTwoCardsGreaterThan21_WhenIsBust_ThenIsBust() {
+    public void GivenPlayerIsDealtHandGreaterThan21_WhenIsBust_ThenIsBust() {
         // given
         dealer.addValue(11);
         dealer.addValue(11);
 
-        final int playerCard1 = game.dealCard();
-        final int playerCard2 = game.dealCard();
-
-        final Hand playerHand = new Hand();
-        playerHand.addValue(playerCard1);
-        playerHand.addValue(playerCard2);
+        final Hand playerHand = game.dealHand();
 
         // when
         // then
@@ -84,20 +73,15 @@ public class GameTest {
     }
 
     @Test
-    public void GivenPlayerNotBust_WhenTwist_ThenBust() {
+    public void GivenPlayerIsDealtHand_WhenTwist_ThenBust() {
         // given
         dealer.addValue(7);
         dealer.addValue(3);
         dealer.addValue(11);
 
-        final int playerCard1 = game.dealCard();
-        final int playerCard2 = game.dealCard();
-        final int playerCard3 = game.dealCard();
-
-        final Hand playerHand = new Hand();
-        playerHand.addValue(playerCard1);
-        playerHand.addValue(playerCard2);
-        playerHand.addValue(playerCard3);
+        final Hand playerHand = game.dealHand();
+        final int playerCard = game.dealCard();
+        playerHand.addValue(playerCard);
 
         // when
         // then
@@ -112,13 +96,8 @@ public class GameTest {
         dealer.addValue(9);
         dealer.addValue(10);
 
-        final Hand playerHand = new Hand();
-        playerHand.addValue(dealer.dealCard());
-        playerHand.addValue(dealer.dealCard());
-
-        final Hand houseHand = new Hand();
-        houseHand.addValue(dealer.dealCard());
-        houseHand.addValue(dealer.dealCard());
+        final Hand playerHand = game.dealHand();
+        final Hand houseHand = game.dealHand();
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -135,13 +114,8 @@ public class GameTest {
         dealer.addValue(9);
         dealer.addValue(10);
 
-        final Hand playerHand = new Hand();
-        playerHand.addValue(dealer.dealCard());
-        playerHand.addValue(dealer.dealCard());
-
-        final Hand houseHand = new Hand();
-        houseHand.addValue(dealer.dealCard());
-        houseHand.addValue(dealer.dealCard());
+        final Hand playerHand = game.dealHand();
+        final Hand houseHand = game.dealHand();
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -158,13 +132,8 @@ public class GameTest {
         dealer.addValue(9);
         dealer.addValue(10);
 
-        final Hand playerHand = new Hand();
-        playerHand.addValue(dealer.dealCard());
-        playerHand.addValue(dealer.dealCard());
-
-        final Hand houseHand = new Hand();
-        houseHand.addValue(dealer.dealCard());
-        houseHand.addValue(dealer.dealCard());
+        final Hand playerHand = game.dealHand();
+        final Hand houseHand = game.dealHand();
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -180,17 +149,13 @@ public class GameTest {
         dealer.addValue(6);
         dealer.addValue(10);
 
-        final Hand playerHand = new Hand();
-        playerHand.addValue(dealer.dealCard());
-        playerHand.addValue(dealer.dealCard());
+        final Hand playerHand = game.dealHand();
         playerHand.addValue(dealer.dealCard());
 
         dealer.addValue(9);
         dealer.addValue(8);
 
-        final Hand houseHand = new Hand();
-        houseHand.addValue(dealer.dealCard());
-        houseHand.addValue(dealer.dealCard());
+        final Hand houseHand = game.dealHand();
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);

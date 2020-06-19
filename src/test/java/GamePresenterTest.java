@@ -43,10 +43,10 @@ public class GamePresenterTest {
         // given
         final int playerCard1 = 8;
         final int playerCard2 = 9;
-        when(game.dealCard()).thenReturn(playerCard1, playerCard2);
         final Hand playerHand = new Hand();
         playerHand.addValue(playerCard1);
         playerHand.addValue(playerCard2);
+        when(game.dealHand()).thenReturn(playerHand);
 
         final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
 
@@ -58,8 +58,6 @@ public class GamePresenterTest {
         orderVerifier.verify(view).showHandPlayer(playerHand);
         orderVerifier.verify(view).showGameInstructions(gameInstructions);
     }
-
-    // TODO: add dealHand() method to game class and refactor tests to use
 
     @Test
     public void name() {

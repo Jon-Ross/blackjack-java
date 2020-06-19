@@ -16,12 +16,7 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     @Override
     public void onStartBlackJackGame() {
-        final int playerCard1 = game.dealCard();
-        final int playerCard2 = game.dealCard();
-        final Hand playerHand = new Hand();
-        playerHand.addValue(playerCard1);
-        playerHand.addValue(playerCard2);
-
+        final Hand playerHand = game.dealHand();
         final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
         view.showHandPlayer(playerHand);
         view.showGameInstructions(gameInstructions);
