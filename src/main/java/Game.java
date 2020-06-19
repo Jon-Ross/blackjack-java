@@ -23,4 +23,13 @@ public class Game {
     public int dealCard() {
         return dealer.dealCard();
     }
+
+    public Hand dealHand() {
+        final int card1 = dealer.dealCard();
+        final int card2 = dealer.dealCard();
+        final Hand hand = new Hand();
+        hand.addValue(card1);
+        hand.addValue(card2);
+        return hand;
+    }
 }

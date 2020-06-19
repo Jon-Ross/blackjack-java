@@ -23,6 +23,7 @@ public class GameScreenIntegrationTest {
         dealer = new DealerMock();
         game = new Game(dealer);
         presenter = new GamePresenter(game);
+        presenter.bind(view);
     }
 
     @Test

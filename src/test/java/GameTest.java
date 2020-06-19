@@ -17,6 +17,37 @@ public class GameTest {
     }
 
     @Test
+    public void WhenDealCard_ThenCardDealt() {
+        // given
+        final int expectedCard = 5;
+        dealer.addValue(expectedCard);
+
+        // when
+        final int actualCard = game.dealCard();
+
+        // then
+        assertEquals(expectedCard, actualCard);
+    }
+
+    @Test
+    public void WhenDealHand_ThenHandDealt() {
+        // given
+        final int card1 = 10;
+        final int card2 = 11;
+        dealer.addValue(card1);
+        dealer.addValue(card2);
+
+        // when
+        final Hand actualHand = game.dealHand();
+
+        // then
+        final Hand expectedHand = new Hand();
+        expectedHand.addValue(card1);
+        expectedHand.addValue(card2);
+        assertEquals(expectedHand, actualHand);
+    }
+
+    @Test
     public void GivenPlayerIsDealtTwoCards_WhenIsBust_ThenIsNotBust() {
         // given
         dealer.addValue(10);

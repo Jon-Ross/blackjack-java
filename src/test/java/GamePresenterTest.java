@@ -59,6 +59,8 @@ public class GamePresenterTest {
         orderVerifier.verify(view).showGameInstructions(gameInstructions);
     }
 
+    // TODO: add dealHand() method to game class and refactor tests to use
+
     @Test
     public void name() {
 
