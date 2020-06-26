@@ -67,4 +67,56 @@ public class GameScreenIntegrationTest {
         verify(view).showPlayAgainInstructions(playAgainInstructions);
 
     }
+
+    @Test
+    public void GivenPlayerTwistsThenSticksWithAWinningHand_WhenGamePlayed_ThenPlayerDeclaredWinner() {
+        // given
+        final String startingInstructions = "Press \"n\" to start a new blackjack game";
+
+        final int playerCard1 = 5;
+        final int playerCard2 = 9;
+        final int playerCard3 = 7;
+        dealer.addValue(playerCard1);
+        dealer.addValue(playerCard2);
+        dealer.addValue(playerCard3);
+
+        final Hand playerHandFirst = new Hand();
+        playerHandFirst.addValue(playerCard1);
+        playerHandFirst.addValue(playerCard2);
+
+        final Hand playerHandSecond = new Hand();
+        playerHandSecond.addValue(playerCard1);
+        playerHandSecond.addValue(playerCard2);
+        playerHandSecond.addValue(playerCard3);
+
+        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
+
+        final int houseCard1 = 9;
+        final int houseCard2 = 10;
+        dealer.addValue(houseCard1);
+        dealer.addValue(houseCard2);
+
+        final Hand houseHand = new Hand();
+        houseHand.addValue(houseCard1);
+        houseHand.addValue(houseCard2);
+
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+
+        // when
+        presenter.onStartScreen();
+        presenter.onStartBlackJackGame();
+        presenter.onTwist();
+        presenter.onStick();
+
+        // then
+        verify(view).showStartingInstructions(startingInstructions);
+        verify(view).showPlayerHand(playerHandFirst);
+        verify(view).showGameInstructions(gameInstructions);
+        verify(view).showPlayerHand(playerHandSecond);
+        verify(view).showGameInstructions(gameInstructions);
+        verify(view).showHouseHand(houseHand);
+        verify(view).showWinner(Winner.PLAYER);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+
+    }
 }
