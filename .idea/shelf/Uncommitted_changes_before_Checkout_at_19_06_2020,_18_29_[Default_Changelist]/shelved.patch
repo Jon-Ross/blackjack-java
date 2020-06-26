@@ -1,0 +1,216 @@
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <bytecodeTargetLevel>\n      <module name=\"blackjack-java.main\" target=\"1.8\" />\n      <module name=\"blackjack-java.test\" target=\"1.8\" />\n    </bytecodeTargetLevel>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
++++ .idea/compiler.xml	(date 1592586993085)
+@@ -1,9 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel>
+-      <module name="blackjack-java.main" target="1.8" />
+-      <module name="blackjack-java.test" target="1.8" />
+-    </bytecodeTargetLevel>
++    <bytecodeTargetLevel target="1.8" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: build/test-results/test/TEST-GameTest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build/test-results/test/TEST-GameTest.xml	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
++++ build/test-results/test/TEST-GameTest.xml	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<testsuite name="GameTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-04-24T11:47:23" hostname="ethan.lau-mbp-C02Z29FULVCG" time="0.002">
+-  <properties/>
+-  <testcase name="GivenHouseHasAtLeastThresholdAndSameAsPlayer_WhenCalculateWinner_ThenDraw" classname="GameTest" time="0.002"/>
+-  <testcase name="GivenHouseHasAtLeastThresholdAndBetterThanPlayer_WhenCalculateWinner_ThenHouseWins" classname="GameTest" time="0.0"/>
+-  <testcase name="GivenHouseHasAtLeastThresholdAndWorseThanPlayer_WhenCalculateWinner_ThenPlayerWins" classname="GameTest" time="0.0"/>
+-  <system-out><![CDATA[]]></system-out>
+-  <system-err><![CDATA[]]></system-err>
+-</testsuite>
+Index: build/reports/tests/test/classes/GameTest.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build/reports/tests/test/classes/GameTest.html	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
++++ build/reports/tests/test/classes/GameTest.html	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
+@@ -1,106 +0,0 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+-<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+-<title>Test results - Class GameTest</title>
+-<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+-<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+-<script src="../js/report.js" type="text/javascript"></script>
+-</head>
+-<body>
+-<div id="content">
+-<h1>Class GameTest</h1>
+-<div class="breadcrumbs">
+-<a href="../index.html">all</a> &gt; 
+-<a href="../packages/default-package.html">default-package</a> &gt; GameTest</div>
+-<div id="summary">
+-<table>
+-<tr>
+-<td>
+-<div class="summaryGroup">
+-<table>
+-<tr>
+-<td>
+-<div class="infoBox" id="tests">
+-<div class="counter">3</div>
+-<p>tests</p>
+-</div>
+-</td>
+-<td>
+-<div class="infoBox" id="failures">
+-<div class="counter">0</div>
+-<p>failures</p>
+-</div>
+-</td>
+-<td>
+-<div class="infoBox" id="ignored">
+-<div class="counter">0</div>
+-<p>ignored</p>
+-</div>
+-</td>
+-<td>
+-<div class="infoBox" id="duration">
+-<div class="counter">0.002s</div>
+-<p>duration</p>
+-</div>
+-</td>
+-</tr>
+-</table>
+-</div>
+-</td>
+-<td>
+-<div class="infoBox success" id="successRate">
+-<div class="percent">100%</div>
+-<p>successful</p>
+-</div>
+-</td>
+-</tr>
+-</table>
+-</div>
+-<div id="tabs">
+-<ul class="tabLinks">
+-<li>
+-<a href="#tab0">Tests</a>
+-</li>
+-</ul>
+-<div id="tab0" class="tab">
+-<h2>Tests</h2>
+-<table>
+-<thead>
+-<tr>
+-<th>Test</th>
+-<th>Duration</th>
+-<th>Result</th>
+-</tr>
+-</thead>
+-<tr>
+-<td class="success">GivenHouseHasAtLeastThresholdAndBetterThanPlayer_WhenCalculateWinner_ThenHouseWins</td>
+-<td class="success">0s</td>
+-<td class="success">passed</td>
+-</tr>
+-<tr>
+-<td class="success">GivenHouseHasAtLeastThresholdAndSameAsPlayer_WhenCalculateWinner_ThenDraw</td>
+-<td class="success">0.002s</td>
+-<td class="success">passed</td>
+-</tr>
+-<tr>
+-<td class="success">GivenHouseHasAtLeastThresholdAndWorseThanPlayer_WhenCalculateWinner_ThenPlayerWins</td>
+-<td class="success">0s</td>
+-<td class="success">passed</td>
+-</tr>
+-</table>
+-</div>
+-</div>
+-<div id="footer">
+-<p>
+-<div>
+-<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+-<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+-</label>
+-</div>Generated by 
+-<a href="http://www.gradle.org">Gradle 5.2.1</a> at 24 Apr 2020, 12:47:23</p>
+-</div>
+-</div>
+-</body>
+-</html>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/out\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
++++ .idea/misc.xml	(date 1592586993081)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Game {\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/Game.java	(revision b7ca916d97dddf3c5cb975ff0b57f250cebe6df0)
++++ src/main/java/Game.java	(date 1592586988984)
+@@ -1,2 +1,35 @@
+ public class Game {
++
++    private static final int BUST_THRESHOLD = 21;
++
++    private final Dealer dealer;
++
++    public Game(Dealer dealer) {
++        this.dealer = dealer;
++    }
++
++    public Winner determineWinner(final Hand houseHand, final Hand playerHand) {
++        if (houseHand.sum() >= playerHand.sum()){
++            return Winner.HOUSE;
++        } else {
++            return Winner.PLAYER;
++        }
++    }
++
++    public boolean isBust(final Hand hand) {
++        return hand.sum() > BUST_THRESHOLD;
++    }
++
++    public int dealCard() {
++        return dealer.dealCard();
++    }
++
++    public Hand dealHand() {
++        final int card1 = dealer.dealCard();
++        final int card2 = dealer.dealCard();
++        final Hand hand = new Hand();
++        hand.addValue(card1);
++        hand.addValue(card2);
++        return hand;
++    }
+ }

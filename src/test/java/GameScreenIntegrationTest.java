@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class GameScreenIntegrationTest {
@@ -31,21 +32,25 @@ public class GameScreenIntegrationTest {
         // given
         final String startingInstructions = "Press \"n\" to start a new blackjack game";
 
-        dealer.addValue(10);
-        dealer.addValue(11);
-        final int playerCard1 = game.dealCard();
-        final int playerCard2 = game.dealCard();
+        final int playerCard1 = 10;
+        final int playerCard2 = 11;
+        dealer.addValue(playerCard1);
+        dealer.addValue(playerCard2);
+
         final Hand playerHand = new Hand();
         playerHand.addValue(playerCard1);
         playerHand.addValue(playerCard2);
 
         final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
 
-        dealer.addValue(9);
-        dealer.addValue(10);
+        final int houseCard1 = 9;
+        final int houseCard2 = 10;
+        dealer.addValue(houseCard1);
+        dealer.addValue(houseCard2);
+
         final Hand houseHand = new Hand();
-        houseHand.addValue(dealer.dealCard());
-        houseHand.addValue(dealer.dealCard());
+        houseHand.addValue(houseCard1);
+        houseHand.addValue(houseCard2);
 
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
 

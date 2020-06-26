@@ -59,6 +59,8 @@ public class GamePresenterTest {
         orderVerifier.verify(view).showGameInstructions(gameInstructions);
     }
 
+    // TODO: Create onTwist() method in GamePresenter and update tests
+
     @Test
     public void name() {
 
