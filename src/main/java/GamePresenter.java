@@ -4,6 +4,8 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     private GameScreenContract.View view;
 
+    private Hand playerHand;
+
     public GamePresenter(Game game) {
         this.game = game;
     }
@@ -16,9 +18,9 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     @Override
     public void onStartBlackJackGame() {
-        final Hand playerHand = game.dealHand();
+        playerHand = game.dealHand();
         final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
-        view.showHandPlayer(playerHand);
+        view.showPlayerHand(playerHand);
         view.showGameInstructions(gameInstructions);
     }
 
@@ -29,7 +31,12 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     @Override
     public void onStick() {
-
+        final Hand houseHand = game.dealHand();
+        view.showHouseHand(houseHand);
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+        view.showWinner(winner);
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+        view.showPlayAgainInstructions(playAgainInstructions);
     }
 
     @Override

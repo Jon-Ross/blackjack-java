@@ -3,7 +3,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class GameScreenIntegrationTest {
@@ -61,7 +60,7 @@ public class GameScreenIntegrationTest {
 
         // then
         verify(view).showStartingInstructions(startingInstructions);
-        verify(view).showHandPlayer(playerHand);
+        verify(view).showPlayerHand(playerHand);
         verify(view).showGameInstructions(gameInstructions);
         verify(view).showHouseHand(houseHand);
         verify(view).showWinner(Winner.PLAYER);
