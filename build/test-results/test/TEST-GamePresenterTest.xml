@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GamePresenterTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-06-12T15:54:06" hostname="ethan.lau-mbp-C02Z29FULVCG" time="0.474">
-  <properties/>
-  <testcase name="GivenNewGame_WhenOnStartScreen_ThenShowStartingInstructions" classname="GamePresenterTest" time="0.457"/>
-  <testcase name="WhenOnStartBlackJackGame_ThenShowPlayerHandAndShowGameInstructions" classname="GamePresenterTest" time="0.017"/>
-  <testcase name="name" classname="GamePresenterTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
