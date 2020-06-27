@@ -1,4 +1,0 @@
-enum Winner {
-    HOUSE,
-    PLAYER
-}
