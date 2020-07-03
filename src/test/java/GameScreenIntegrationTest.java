@@ -1,8 +1,13 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
-import static org.mockito.Mockito.verify;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class GameScreenIntegrationTest {
@@ -63,7 +68,6 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand);
         verify(view).showWinner(Winner.PLAYER);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
-
     }
 
     @Test
@@ -103,18 +107,30 @@ public class GameScreenIntegrationTest {
         // when
         presenter.onStartScreen();
         presenter.onStartBlackJackGame();
+
+        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showPlayerHand(argument.capture());
+        List<Hand> values = argument.getAllValues();
+        assertEquals(1, values.size());
+        assertEquals(playerHandFirst, values.get(0));
+
         presenter.onTwist();
         presenter.onStick();
 
         // then
+        // onStartScreen
         verify(view).showStartingInstructions(startingInstructions);
-        verify(view).showPlayerHand(playerHandFirst);
-        verify(view).showGameInstructions(gameInstructions);
-        verify(view).showPlayerHand(playerHandSecond);
-        verify(view).showGameInstructions(gameInstructions);
+        // onStartBlackJackGame
+        // onTwist
+        argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showPlayerHand(argument.capture());
+        values = argument.getAllValues();
+        assertEquals(2, values.size());
+        assertEquals(playerHandSecond, values.get(1));
+        verify(view, times(2)).showGameInstructions(gameInstructions);
+        // onStick
         verify(view).showHouseHand(houseHand);
         verify(view).showWinner(Winner.PLAYER);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
-
     }
 }

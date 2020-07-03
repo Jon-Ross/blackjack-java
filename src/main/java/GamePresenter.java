@@ -26,7 +26,10 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     @Override
     public void onTwist() {
-
+        playerHand.addValue(game.dealCard());
+        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
+        view.showPlayerHand(playerHand);
+        view.showGameInstructions(gameInstructions);
     }
 
     @Override
