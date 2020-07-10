@@ -32,4 +32,8 @@ public class Game {
         hand.addValue(card2);
         return hand;
     }
+
+    public boolean isUnderMinThreshold(final Hand houseHand) {
+        return false;
+    }
 }

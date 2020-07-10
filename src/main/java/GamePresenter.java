@@ -36,6 +36,14 @@ public class GamePresenter implements GameScreenContract.Presenter {
     public void onStick() {
         final Hand houseHand = game.dealHand();
         view.showHouseHand(houseHand);
+        if (game.isUnderMinThreshold(houseHand)) {
+            final String alert1 = "House value is less than 17.\nHouse Twists.";
+            view.alertHouseAction(alert1);
+            houseHand.addValue(game.dealCard());
+            view.showHouseHand(houseHand);
+        }
+        final String alert2 = "House value is at least 17.\nHouse Sticks.";
+        view.alertHouseAction(alert2);
         final Winner winner = game.determineWinner(houseHand, playerHand);
         view.showWinner(winner);
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";

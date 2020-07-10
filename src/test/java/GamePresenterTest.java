@@ -156,4 +156,50 @@ public class GamePresenterTest {
         assertEquals(playerHand2, values.get(1));
         verify(view, times(2)).showGameInstructions(GAME_INSTRUCTIONS);
     }
+
+    @Test
+    public void GivenPlayerSticksWithLosingHandAndHouseTwists_WhenGamePlayed_ThenHouseDeclaredWinner() {
+        // given
+        final int playerCard1 = 10;
+        final int playerCard2 = 5;
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+        when(game.dealHand()).thenReturn(playerHand);
+
+        presenter.onStartBlackJackGame();
+
+        final int houseCard1 = 10;
+        final int houseCard2 = 6;
+        final int houseCard3 = 2;
+        final Hand houseHand1 = new Hand();
+        houseHand1.addValue(houseCard1);
+        houseHand1.addValue(houseCard2);
+        when(game.dealHand()).thenReturn(houseHand1);
+        when(game.isUnderMinThreshold(houseHand1)).thenReturn(true);
+        when(game.dealCard()).thenReturn(houseCard3);
+        final Hand houseHand2 = new Hand();
+        houseHand2.addValue(houseCard1);
+        houseHand2.addValue(houseCard2);
+        houseHand2.addValue(houseCard3);
+        when(game.determineWinner(houseHand2, playerHand)).thenReturn(Winner.HOUSE);
+
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+
+        // when
+        presenter.onStick();
+
+        // then
+        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showHouseHand(argument.capture());
+        List<Hand> values = argument.getAllValues();
+        assertEquals(2, values.size());
+
+        assertEquals(houseHand1, values.get(0));
+        verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
+        assertEquals(houseHand2, values.get(1));
+        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
+        verify(view).showWinner(Winner.HOUSE);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+    }
 }
