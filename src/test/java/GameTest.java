@@ -89,7 +89,7 @@ public class GameTest {
     }
 
     @Test
-    public void GivenHouseHasAtLeastThresholdAndBetterThanPlayer_WhenDetermineWinner_ThenHouseWins() {
+    public void GivenHouseHandAndBetterThanPlayer_WhenDetermineWinner_ThenHouseWins() {
         // given
         dealer.addValue(5);
         dealer.addValue(10);
@@ -107,7 +107,7 @@ public class GameTest {
     }
 
     @Test
-    public void GivenHouseHasAtLeastThresholdAndWorseThanPlayer_WhenDetermineWinner_ThenPlayerWins() {
+    public void GivenHouseHandAndWorseThanPlayer_WhenDetermineWinner_ThenPlayerWins() {
         // given
         dealer.addValue(10);
         dealer.addValue(10);
@@ -125,7 +125,7 @@ public class GameTest {
     }
 
     @Test
-    public void GivenHouseHasAtLeastThresholdAndSameAsPlayer_WhenDetermineWinner_ThenHouseWins() {
+    public void GivenHouseHandAndSameAsPlayer_WhenDetermineWinner_ThenHouseWins() {
         // given
         dealer.addValue(9);
         dealer.addValue(10);
@@ -143,7 +143,7 @@ public class GameTest {
     }
 
     @Test
-    public void GivenHouseHasAtLeastThresholdAndPlayerTwists_WhenDetermineWinner_ThenPlayerWins() {
+    public void GivenHouseHandAndPlayerTwists_WhenDetermineWinner_ThenPlayerWins() {
         // given
         dealer.addValue(5);
         dealer.addValue(6);
@@ -162,5 +162,29 @@ public class GameTest {
 
         // then
         assertEquals(Winner.PLAYER, winner);
+    }
+
+    @Test
+    public void GivenHouseHandIsUnderMinThreshold_WhenIsUnderMinThreshold_ThenReturnTrue() {
+        // given
+        // when
+        final Hand houseHand = new Hand();
+        houseHand.addValue(10);
+        houseHand.addValue(6);
+
+        // then
+        assertTrue(game.isUnderMinThreshold(houseHand));
+    }
+
+    @Test
+    public void GivenHouseHandIsAtMinThreshold_WhenIsUnderMinThreshold_ThenReturnFalse() {
+        // given
+        // when
+        final Hand houseHand = new Hand();
+        houseHand.addValue(10);
+        houseHand.addValue(7);
+
+        // then
+        assertFalse(game.isUnderMinThreshold(houseHand));
     }
 }

@@ -1,6 +1,7 @@
 public class Game {
 
     private static final int BUST_THRESHOLD = 21;
+    private static final int MIN_THRESHOLD = 17;
 
     private final Dealer dealer;
 
@@ -34,6 +35,6 @@ public class Game {
     }
 
     public boolean isUnderMinThreshold(final Hand houseHand) {
-        return false;
+        return houseHand.sum() < MIN_THRESHOLD;
     }
 }
