@@ -90,6 +90,7 @@ public class GamePresenterTest {
 
         // then
         verify(view).showHouseHand(houseHand);
+        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
@@ -121,6 +122,7 @@ public class GamePresenterTest {
 
         // then
         verify(view).showHouseHand(houseHand);
+        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }

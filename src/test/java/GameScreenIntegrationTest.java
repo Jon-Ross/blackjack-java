@@ -130,6 +130,7 @@ public class GameScreenIntegrationTest {
         verify(view, times(2)).showGameInstructions(gameInstructions);
         // onStick
         verify(view).showHouseHand(houseHand);
+        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
@@ -180,4 +181,11 @@ public class GameScreenIntegrationTest {
         verify(view).showWinner(Winner.HOUSE);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
+
+    // TODO:
+    // 1. update previous tests with verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
+    // 2. implement isUnderMinThreshold() method
+    // 3. implement multiple house twists
+    // 4. implement house goes bust
+    // 5. think about refactoring - like single view alert(String message) method?
 }
