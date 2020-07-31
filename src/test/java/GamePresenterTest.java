@@ -29,6 +29,8 @@ public class GamePresenterTest {
 
         presenter = new GamePresenter(game);
         presenter.bind(view);
+
+        when(game.isBust(any(Hand.class))).thenReturn(false);
     }
 
     @Test
@@ -259,6 +261,42 @@ public class GamePresenterTest {
         verify(view, times(2)).alertHouseAction("House value is less than 17.\nHouse Twists.");
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+    }
+
+    @Test
+    public void GivenPlayerDealtCardOverBustThreshold_WhenOnTwist_ThenPlayerBust() {
+        // given
+        final int playerCard1 = 10;
+        final int playerCard2 = 6;
+        final Hand playerHand1 = new Hand();
+        playerHand1.addValue(playerCard1);
+        playerHand1.addValue(playerCard2);
+        when(game.dealHand()).thenReturn(playerHand1);
+
+        presenter.onStartBlackJackGame();
+
+        final int playerCard3 = 6;
+        when(game.dealCard()).thenReturn(playerCard3);
+        final Hand playerHand2 = new Hand();
+        playerHand2.addValue(playerCard1);
+        playerHand2.addValue(playerCard2);
+        playerHand2.addValue(playerCard3);
+        when(game.isBust(playerHand2)).thenReturn(true);
+
+        // when
+        presenter.onTwist();
+
+        // then
+        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showPlayerHand(argument.capture());
+        List<Hand> values = argument.getAllValues();
+        assertEquals(2, values.size());
+        assertEquals(playerHand1, values.get(0));
+        assertEquals(playerHand2, values.get(1));
+        verify(view).alertBust("You've gone bust!");
+        verify(view).showWinner(Winner.HOUSE);
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 }

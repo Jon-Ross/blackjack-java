@@ -194,10 +194,57 @@ public class GameScreenIntegrationTest {
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 
+    @Test
+    public void GivenPlayerTwists_WhenGamePlayed_ThenPlayerIsBust() {
+        // given
+        final String startingInstructions = "Press \"n\" to start a new blackjack game";
+
+        final int playerCard1 = 5;
+        final int playerCard2 = 9;
+        final int playerCard3 = 8;
+        dealer.addValue(playerCard1);
+        dealer.addValue(playerCard2);
+        dealer.addValue(playerCard3);
+
+        final Hand playerHandFirst = new Hand();
+        playerHandFirst.addValue(playerCard1);
+        playerHandFirst.addValue(playerCard2);
+
+        final Hand playerHandSecond = new Hand();
+        playerHandSecond.addValue(playerCard1);
+        playerHandSecond.addValue(playerCard2);
+        playerHandSecond.addValue(playerCard3);
+
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+
+        // when
+        presenter.onStartScreen();
+        presenter.onStartBlackJackGame();
+
+        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showPlayerHand(argument.capture());
+        List<Hand> values = argument.getAllValues();
+        assertEquals(1, values.size());
+        assertEquals(playerHandFirst, values.get(0));
+
+        presenter.onTwist();
+
+        // then
+        // onStartScreen
+        verify(view).showStartingInstructions(startingInstructions);
+        // onStartBlackJackGame
+        // onTwist
+        argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showPlayerHand(argument.capture());
+        values = argument.getAllValues();
+        assertEquals(2, values.size());
+        assertEquals(playerHandSecond, values.get(1));
+        verify(view).alertBust("You've gone bust!");
+        verify(view).showWinner(Winner.HOUSE);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+    }
+
     // TODO:
-    // 1. update previous tests with verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
-    // 2. implement isUnderMinThreshold() method
-    // 3. implement multiple house twists
-    // 4. implement house goes bust
-    // 5. think about refactoring - like single view alert(String message) method?
+    // 1. implement house goes bust
+    // 2. think about refactoring - like single view alert(String message) method?
 }

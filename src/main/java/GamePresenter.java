@@ -27,9 +27,18 @@ public class GamePresenter implements GameScreenContract.Presenter {
     @Override
     public void onTwist() {
         playerHand.addValue(game.dealCard());
-        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
-        view.showPlayerHand(playerHand);
-        view.showGameInstructions(gameInstructions);
+        if (game.isBust(playerHand)) {
+            final String bust = "You've gone bust!";
+            view.showPlayerHand(playerHand);
+            view.alertBust(bust);
+            view.showWinner(Winner.HOUSE);
+            final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+            view.showPlayAgainInstructions(playAgainInstructions);
+        } else {
+            final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
+            view.showPlayerHand(playerHand);
+            view.showGameInstructions(gameInstructions);
+        }
     }
 
     @Override
