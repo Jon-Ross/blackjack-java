@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -158,9 +157,14 @@ public class GameScreenIntegrationTest {
         dealer.addValue(houseCard2);
         dealer.addValue(houseCard3);
 
-        final Hand houseHand = new Hand();
-        houseHand.addValue(houseCard1);
-        houseHand.addValue(houseCard2);
+        final Hand houseHand1 = new Hand();
+        houseHand1.addValue(houseCard1);
+        houseHand1.addValue(houseCard2);
+
+        final Hand houseHand2 = new Hand();
+        houseHand2.addValue(houseCard1);
+        houseHand2.addValue(houseCard2);
+        houseHand2.addValue(houseCard3);
 
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
 
@@ -173,10 +177,18 @@ public class GameScreenIntegrationTest {
         verify(view).showStartingInstructions(startingInstructions);
         verify(view).showPlayerHand(playerHand);
         verify(view).showGameInstructions(gameInstructions);
-        verify(view).showHouseHand(houseHand);
+
+        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showHouseHand(argument.capture());
+        List<Hand> values = argument.getAllValues();
+        assertEquals(2, values.size());
+        assertEquals(houseHand1, values.get(0));
+        assertEquals(houseHand2, values.get(1));
+
+        verify(view).showHouseHand(houseHand1);
         verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
-        houseHand.addValue(houseCard3);
-        verify(view).showHouseHand(houseHand);
+        houseHand1.addValue(houseCard3);
+        verify(view).showHouseHand(houseHand2);
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
         verify(view).showPlayAgainInstructions(playAgainInstructions);

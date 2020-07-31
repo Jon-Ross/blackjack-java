@@ -1,10 +1,18 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Hand {
 
     private List<Integer> cardValues = new ArrayList<>();
+
+    public Hand() {}
+
+    // created extra constructor for test purposes
+    public Hand(final Hand hand) {
+        cardValues.addAll(hand.cardValues);
+    }
 
     public void addValue(int card) {
         cardValues.add(card);

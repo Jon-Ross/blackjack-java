@@ -34,12 +34,16 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     @Override
     public void onStick() {
-        final Hand houseHand = game.dealHand();
+        Hand houseHand = game.dealHand();
         view.showHouseHand(houseHand);
-        if (game.isUnderMinThreshold(houseHand)) {
+        while (game.isUnderMinThreshold(houseHand)) {
             final String alert1 = "House value is less than 17.\nHouse Twists.";
             view.alertHouseAction(alert1);
-            houseHand.addValue(game.dealCard());
+
+            // created new object for test purposes
+            final Hand newHouseHand = new Hand(houseHand);
+            newHouseHand.addValue(game.dealCard());
+            houseHand = newHouseHand;
             view.showHouseHand(houseHand);
         }
         final String alert2 = "House value is at least 17.\nHouse Sticks.";

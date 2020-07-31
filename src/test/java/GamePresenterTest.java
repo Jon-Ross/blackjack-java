@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -81,6 +80,7 @@ public class GamePresenterTest {
         houseHand.addValue(houseCard1);
         houseHand.addValue(houseCard2);
         when(game.dealHand()).thenReturn(houseHand);
+        when(game.isUnderMinThreshold(houseHand)).thenReturn(false);
         when(game.determineWinner(houseHand, playerHand)).thenReturn(Winner.PLAYER);
 
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
@@ -113,6 +113,7 @@ public class GamePresenterTest {
         houseHand.addValue(houseCard1);
         houseHand.addValue(houseCard2);
         when(game.dealHand()).thenReturn(houseHand);
+        when(game.isUnderMinThreshold(houseHand)).thenReturn(false);
         when(game.determineWinner(houseHand, playerHand)).thenReturn(Winner.HOUSE);
 
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
@@ -173,17 +174,18 @@ public class GamePresenterTest {
 
         final int houseCard1 = 10;
         final int houseCard2 = 6;
-        final int houseCard3 = 2;
         final Hand houseHand1 = new Hand();
         houseHand1.addValue(houseCard1);
         houseHand1.addValue(houseCard2);
         when(game.dealHand()).thenReturn(houseHand1);
         when(game.isUnderMinThreshold(houseHand1)).thenReturn(true);
+        final int houseCard3 = 2;
         when(game.dealCard()).thenReturn(houseCard3);
         final Hand houseHand2 = new Hand();
         houseHand2.addValue(houseCard1);
         houseHand2.addValue(houseCard2);
         houseHand2.addValue(houseCard3);
+        when(game.isUnderMinThreshold(houseHand2)).thenReturn(false);
         when(game.determineWinner(houseHand2, playerHand)).thenReturn(Winner.HOUSE);
 
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
@@ -202,6 +204,61 @@ public class GamePresenterTest {
         assertEquals(houseHand2, values.get(1));
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+    }
+
+    @Test
+    public void GivenPlayerSticksWithWinningHandAndHouseTwistsTwiceAboveThreshold_WhenGamePlayed_ThenPlayerDeclaredWinner() {
+        // given
+        final int playerCard1 = 10;
+        final int playerCard2 = 8;
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+        when(game.dealHand()).thenReturn(playerHand);
+
+        presenter.onStartBlackJackGame();
+
+        final int houseCard1 = 10;
+        final int houseCard2 = 3;
+        final Hand houseHand1 = new Hand();
+        houseHand1.addValue(houseCard1);
+        houseHand1.addValue(houseCard2);
+        when(game.dealHand()).thenReturn(houseHand1);
+        when(game.isUnderMinThreshold(houseHand1)).thenReturn(true);
+        final int houseCard3 = 3;
+        final int houseCard4 = 1;
+        when(game.dealCard()).thenReturn(houseCard3, houseCard4);
+        final Hand houseHand2 = new Hand();
+        houseHand2.addValue(houseCard1);
+        houseHand2.addValue(houseCard2);
+        houseHand2.addValue(houseCard3);
+        when(game.isUnderMinThreshold(houseHand2)).thenReturn(true);
+        final Hand houseHand3 = new Hand();
+        houseHand3.addValue(houseCard1);
+        houseHand3.addValue(houseCard2);
+        houseHand3.addValue(houseCard3);
+        houseHand3.addValue(houseCard4);
+        when(game.isUnderMinThreshold(houseHand3)).thenReturn(false);
+        when(game.determineWinner(houseHand3, playerHand)).thenReturn(Winner.PLAYER);
+
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+
+        // when
+        presenter.onStick();
+
+        // then
+        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+        verify(view, atLeastOnce()).showHouseHand(argument.capture());
+        List<Hand> values = argument.getAllValues();
+        assertEquals(3, values.size());
+
+        assertEquals(houseHand1, values.get(0));
+        assertEquals(houseHand2, values.get(1));
+        assertEquals(houseHand3, values.get(2));
+        verify(view, times(2)).alertHouseAction("House value is less than 17.\nHouse Twists.");
+        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
+        verify(view).showWinner(Winner.PLAYER);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 }
