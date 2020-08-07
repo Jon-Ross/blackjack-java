@@ -1,5 +1,4 @@
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -89,6 +88,49 @@ public class GameTest {
     }
 
     @Test
+    public void GivenPlayerNotBustAndHouseUnderMinThreshold_WhenDetermineWinner_ThenReturnNull() {
+        // given
+        dealer.addValue(7);
+        dealer.addValue(10);
+
+        final Hand playerHand = game.dealHand();
+        playerHand.addValue(dealer.dealCard());
+
+        dealer.addValue(9);
+        dealer.addValue(7);
+
+        final Hand houseHand = game.dealHand();
+
+        // when
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+
+        // then
+        assertNull(winner);
+    }
+
+    @Test
+    public void GivenPlayerIsBustAndHouseUnderMinThreshold_WhenDetermineWinner_ThenReturnNull() {
+        // given
+        dealer.addValue(5);
+        dealer.addValue(7);
+        dealer.addValue(10);
+
+        final Hand playerHand = game.dealHand();
+        playerHand.addValue(dealer.dealCard());
+
+        dealer.addValue(9);
+        dealer.addValue(7);
+
+        final Hand houseHand = game.dealHand();
+
+        // when
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+
+        // then
+        assertNull(winner);
+    }
+
+    @Test
     public void GivenHouseHandAndBetterThanPlayer_WhenDetermineWinner_ThenHouseWins() {
         // given
         dealer.addValue(5);
@@ -162,6 +204,67 @@ public class GameTest {
 
         // then
         assertEquals(Winner.PLAYER, winner);
+    }
+
+    @Test
+    public void GivenPlayerBustAndHouseValid_WhenDetermineWinner_ThenHouseWins() {
+        // given
+        dealer.addValue(5);
+        dealer.addValue(7);
+        dealer.addValue(10);
+
+        final Hand playerHand = game.dealHand();
+        playerHand.addValue(dealer.dealCard());
+
+        dealer.addValue(9);
+        dealer.addValue(8);
+
+        final Hand houseHand = game.dealHand();
+
+        // when
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+
+        // then
+        assertEquals(Winner.HOUSE, winner);
+    }
+
+    @Test
+    public void GivenHouseBustAndPlayerValid_WhenDetermineWinner_ThenPlayerWins() {
+        // given
+        final Hand playerHand = new Hand();
+        playerHand.addValue(9);
+        playerHand.addValue(8);
+
+        final Hand houseHand = new Hand();
+        houseHand.addValue(5);
+        houseHand.addValue(7);
+        houseHand.addValue(10);
+
+        // when
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+
+        // then
+        assertEquals(Winner.PLAYER, winner);
+    }
+
+    @Test
+    public void GivenHouseAndPlayerBust_WhenDetermineWinner_ThenHouseWins() {
+        // given
+        final Hand playerHand = new Hand();
+        playerHand.addValue(5);
+        playerHand.addValue(7);
+        playerHand.addValue(10);
+
+        final Hand houseHand = new Hand();
+        houseHand.addValue(5);
+        houseHand.addValue(7);
+        houseHand.addValue(10);
+
+        // when
+        final Winner winner = game.determineWinner(houseHand, playerHand);
+
+        // then
+        assertEquals(Winner.HOUSE, winner);
     }
 
     @Test

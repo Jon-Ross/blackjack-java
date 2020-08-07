@@ -10,6 +10,16 @@ public class Game {
     }
 
     public Winner determineWinner(final Hand houseHand, final Hand playerHand) {
+        if (houseHand.sum() < MIN_THRESHOLD) {
+            return null;
+        }
+
+        if (isBust(playerHand)) {
+            return Winner.HOUSE;
+        } else if (isBust(houseHand)) {
+            return Winner.PLAYER;
+        }
+
         if (houseHand.sum() >= playerHand.sum()){
             return Winner.HOUSE;
         } else {
