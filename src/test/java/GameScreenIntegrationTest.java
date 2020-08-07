@@ -293,6 +293,5 @@ public class GameScreenIntegrationTest {
 
 
     // TODO:
-    // 1. implement house goes bust
-    // 2. think about refactoring - like single view alert(String message) method?
+    // 1. think about refactoring - like single view alert(String message) method?
 }
