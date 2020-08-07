@@ -28,9 +28,8 @@ public class GamePresenter implements GameScreenContract.Presenter {
     public void onTwist() {
         playerHand.addValue(game.dealCard());
         if (game.isBust(playerHand)) {
-            final String bust = "You've gone bust!";
             view.showPlayerHand(playerHand);
-            view.alertBust(bust);
+            view.alertBust("You've gone bust!");
             view.showWinner(Winner.HOUSE);
             final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
             view.showPlayAgainInstructions(playAgainInstructions);
@@ -46,8 +45,8 @@ public class GamePresenter implements GameScreenContract.Presenter {
         Hand houseHand = game.dealHand();
         view.showHouseHand(houseHand);
         while (game.isUnderMinThreshold(houseHand)) {
-            final String alert1 = "House value is less than 17.\nHouse Twists.";
-            view.alertHouseAction(alert1);
+            final String alert = "House value is less than 17.\nHouse Twists.";
+            view.alertHouseAction(alert);
 
             // created new object for test purposes
             final Hand newHouseHand = new Hand(houseHand);
@@ -55,8 +54,11 @@ public class GamePresenter implements GameScreenContract.Presenter {
             houseHand = newHouseHand;
             view.showHouseHand(houseHand);
         }
-        final String alert2 = "House value is at least 17.\nHouse Sticks.";
-        view.alertHouseAction(alert2);
+        if (game.isBust(houseHand)) {
+            view.alertBust("House has gone bust!");
+        } else {
+            view.alertHouseAction("House value is at least 17.\nHouse Sticks.");
+        }
         final Winner winner = game.determineWinner(houseHand, playerHand);
         view.showWinner(winner);
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";

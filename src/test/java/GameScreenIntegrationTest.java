@@ -187,7 +187,6 @@ public class GameScreenIntegrationTest {
 
         verify(view).showHouseHand(houseHand1);
         verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
-        houseHand1.addValue(houseCard3);
         verify(view).showHouseHand(houseHand2);
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
@@ -243,6 +242,62 @@ public class GameScreenIntegrationTest {
         verify(view).showWinner(Winner.HOUSE);
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
+
+    @Test
+    public void GivenHouseTwists_WhenGamePlayed_ThenHouseIsBust() {
+        // given
+        final int playerCard1 = 8;
+        final int playerCard2 = 10;
+        dealer.addValue(playerCard1);
+        dealer.addValue(playerCard2);
+
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+
+        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
+
+        final int houseCard1 = 6;
+        final int houseCard2 = 10;
+        final int houseCard3 = 6;
+        dealer.addValue(houseCard1);
+        dealer.addValue(houseCard2);
+        dealer.addValue(houseCard3);
+
+        final Hand houseHand1 = new Hand();
+        houseHand1.addValue(houseCard1);
+        houseHand1.addValue(houseCard2);
+
+        final Hand houseHand2 = new Hand();
+        houseHand2.addValue(houseCard1);
+        houseHand2.addValue(houseCard2);
+        houseHand2.addValue(houseCard3);
+
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+
+        // when
+        presenter.onStartBlackJackGame();
+        presenter.onStick();
+
+        // then
+        verify(view).showGameInstructions(gameInstructions);
+        verify(view).showPlayerHand(playerHand);
+
+//        ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
+//        verify(view, atLeastOnce()).showHouseHand(argument.capture());
+//        List<Hand> values = argument.getAllValues();
+//        assertEquals(2, values.size());
+//        assertEquals(houseHand1, values.get(0));
+//        assertEquals(houseHand2, values.get(1));
+
+        verify(view).showHouseHand(houseHand1);
+        verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
+        verify(view).showHouseHand(houseHand2);
+        verify(view).alertBust("House has gone bust!");
+        verify(view).showWinner(Winner.PLAYER);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+    }
+
 
     // TODO:
     // 1. implement house goes bust

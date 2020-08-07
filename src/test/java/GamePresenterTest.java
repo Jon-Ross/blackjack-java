@@ -299,4 +299,53 @@ public class GamePresenterTest {
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
         verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
+
+    @Test
+    public void GivenHouseTwists_WhenOnStick_ThenHouseIsBust() {
+        // given
+        final int playerCard1 = 10;
+        final int playerCard2 = 6;
+        final Hand playerHand = new Hand();
+        playerHand.addValue(playerCard1);
+        playerHand.addValue(playerCard2);
+
+        final int houseCard1 = 6;
+        final int houseCard2 = 10;
+        final int houseCard3 = 6;
+
+        final Hand houseHand1 = new Hand();
+        houseHand1.addValue(houseCard1);
+        houseHand1.addValue(houseCard2);
+
+        when(game.dealHand()).thenReturn(playerHand, houseHand1);
+        when(game.dealCard()).thenReturn(houseCard3);
+
+        final Hand houseHand2 = new Hand();
+        houseHand2.addValue(houseCard1);
+        houseHand2.addValue(houseCard2);
+        houseHand2.addValue(houseCard3);
+
+        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+        when(game.isUnderMinThreshold(houseHand1)).thenReturn(true);
+        when(game.isUnderMinThreshold(houseHand2)).thenReturn(false);
+        when(game.isBust(houseHand2)).thenReturn(true);
+        when(game.determineWinner(houseHand2, playerHand)).thenReturn(Winner.PLAYER);
+
+        // when
+        presenter.onStartBlackJackGame();
+        presenter.onStick();
+
+        // then
+        verify(view).showGameInstructions(GAME_INSTRUCTIONS);
+        verify(view).showPlayerHand(playerHand);
+
+        verify(view).showHouseHand(houseHand1);
+        verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
+        verify(view).showHouseHand(houseHand2);
+        verify(view).alertBust("House has gone bust!");
+        verify(view).showWinner(Winner.PLAYER);
+        verify(view).showPlayAgainInstructions(playAgainInstructions);
+    }
+
+
 }
