@@ -49,9 +49,9 @@ public class GameTest {
     @Test
     public void GivenPlayerIsDealtHand_WhenIsBust_ThenIsNotBust() {
         // given
-        dealer.addValue(10);
-        dealer.addValue(11);
-        final Hand playerHand = game.dealHand();
+        final Hand playerHand = new Hand();
+        playerHand.addValue(10);
+        playerHand.addValue(11);
 
         // when
         // then
@@ -61,10 +61,9 @@ public class GameTest {
     @Test
     public void GivenPlayerIsDealtHandGreaterThan21_WhenIsBust_ThenIsBust() {
         // given
-        dealer.addValue(11);
-        dealer.addValue(11);
-
-        final Hand playerHand = game.dealHand();
+        final Hand playerHand = new Hand();
+        playerHand.addValue(11);
+        playerHand.addValue(11);
 
         // when
         // then
@@ -74,13 +73,10 @@ public class GameTest {
     @Test
     public void GivenPlayerIsDealtHand_WhenTwist_ThenBust() {
         // given
-        dealer.addValue(7);
-        dealer.addValue(3);
-        dealer.addValue(11);
-
-        final Hand playerHand = game.dealHand();
-        final int playerCard = game.dealCard();
-        playerHand.addValue(playerCard);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(7);
+        playerHand.addValue(3);
+        playerHand.addValue(11);
 
         // when
         // then
@@ -90,16 +86,13 @@ public class GameTest {
     @Test
     public void GivenPlayerNotBustAndHouseUnderMinThreshold_WhenDetermineWinner_ThenReturnNull() {
         // given
-        dealer.addValue(7);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(7);
+        playerHand.addValue(9);
 
-        final Hand playerHand = game.dealHand();
-        playerHand.addValue(dealer.dealCard());
-
-        dealer.addValue(9);
-        dealer.addValue(7);
-
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(6);
+        houseHand.addValue(10);
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -111,17 +104,14 @@ public class GameTest {
     @Test
     public void GivenPlayerIsBustAndHouseUnderMinThreshold_WhenDetermineWinner_ThenReturnNull() {
         // given
-        dealer.addValue(5);
-        dealer.addValue(7);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(5);
+        playerHand.addValue(7);
+        playerHand.addValue(10);
 
-        final Hand playerHand = game.dealHand();
-        playerHand.addValue(dealer.dealCard());
-
-        dealer.addValue(9);
-        dealer.addValue(7);
-
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(6);
+        houseHand.addValue(10);
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -133,13 +123,13 @@ public class GameTest {
     @Test
     public void GivenHouseHandAndBetterThanPlayer_WhenDetermineWinner_ThenHouseWins() {
         // given
-        dealer.addValue(5);
-        dealer.addValue(10);
-        dealer.addValue(9);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(5);
+        playerHand.addValue(10);
 
-        final Hand playerHand = game.dealHand();
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(9);
+        houseHand.addValue(10);
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -151,13 +141,14 @@ public class GameTest {
     @Test
     public void GivenHouseHandAndWorseThanPlayer_WhenDetermineWinner_ThenPlayerWins() {
         // given
-        dealer.addValue(10);
-        dealer.addValue(10);
-        dealer.addValue(9);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(10);
+        playerHand.addValue(10);
 
-        final Hand playerHand = game.dealHand();
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(9);
+        houseHand.addValue(10);
+
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -169,13 +160,14 @@ public class GameTest {
     @Test
     public void GivenHouseHandAndSameAsPlayer_WhenDetermineWinner_ThenHouseWins() {
         // given
-        dealer.addValue(9);
-        dealer.addValue(10);
-        dealer.addValue(9);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(9);
+        playerHand.addValue(10);
 
-        final Hand playerHand = game.dealHand();
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(9);
+        houseHand.addValue(10);
+
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -187,17 +179,14 @@ public class GameTest {
     @Test
     public void GivenHouseHandAndPlayerTwists_WhenDetermineWinner_ThenPlayerWins() {
         // given
-        dealer.addValue(5);
-        dealer.addValue(6);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(5);
+        playerHand.addValue(6);
+        playerHand.addValue(10);
 
-        final Hand playerHand = game.dealHand();
-        playerHand.addValue(dealer.dealCard());
-
-        dealer.addValue(9);
-        dealer.addValue(8);
-
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(9);
+        houseHand.addValue(8);
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
@@ -209,17 +198,14 @@ public class GameTest {
     @Test
     public void GivenPlayerBustAndHouseValid_WhenDetermineWinner_ThenHouseWins() {
         // given
-        dealer.addValue(5);
-        dealer.addValue(7);
-        dealer.addValue(10);
+        final Hand playerHand = new Hand();
+        playerHand.addValue(5);
+        playerHand.addValue(7);
+        playerHand.addValue(10);
 
-        final Hand playerHand = game.dealHand();
-        playerHand.addValue(dealer.dealCard());
-
-        dealer.addValue(9);
-        dealer.addValue(8);
-
-        final Hand houseHand = game.dealHand();
+        final Hand houseHand = new Hand();
+        houseHand.addValue(9);
+        houseHand.addValue(8);
 
         // when
         final Winner winner = game.determineWinner(houseHand, playerHand);
