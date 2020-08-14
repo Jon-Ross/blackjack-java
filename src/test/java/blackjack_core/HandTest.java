@@ -1,7 +1,8 @@
-import org.junit.Ignore;
+package blackjack_core;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class HandTest {
 

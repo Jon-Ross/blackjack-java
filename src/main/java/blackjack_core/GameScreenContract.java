@@ -1,3 +1,5 @@
+package blackjack_core;
+
 public interface GameScreenContract {
 
     interface View {

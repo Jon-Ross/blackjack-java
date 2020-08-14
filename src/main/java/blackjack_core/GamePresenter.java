@@ -1,3 +1,5 @@
+package blackjack_core;
+
 public class GamePresenter implements GameScreenContract.Presenter {
 
     private final Game game;

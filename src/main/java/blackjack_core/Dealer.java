@@ -1,3 +1,5 @@
+package blackjack_core;
+
 import java.util.Random;
 
 public class Dealer {

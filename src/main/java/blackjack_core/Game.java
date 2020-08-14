@@ -1,3 +1,5 @@
+package blackjack_core;
+
 public class Game {
 
     private static final int BUST_THRESHOLD = 21;
