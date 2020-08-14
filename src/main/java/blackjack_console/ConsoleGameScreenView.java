@@ -20,14 +20,7 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
     public void showStartingInstructions(String instructions) {
         println(instructions);
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            final String answer = reader.readLine();
-            if (answer.toLowerCase().equals("n")) {
-                presenter.onStartBlackJackGame();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        handleStartGame();
     }
 
     @Override
@@ -38,7 +31,16 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
     @Override
     public void showGameInstructions(String instructions) {
         println(instructions);
-
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            final String answer = reader.readLine();
+            if (answer.toLowerCase().equals("s")) {
+                presenter.onStick();
+            } else if (answer.toLowerCase().equals("t")) {
+                presenter.onTwist();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,6 +56,8 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
     @Override
     public void showPlayAgainInstructions(String instructions) {
         println(instructions);
+
+        handleStartGame();
     }
 
     @Override
@@ -64,6 +68,17 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
     @Override
     public void alertHouseAction(String alert) {
         println(alert);
+    }
+
+    private void handleStartGame() {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            final String answer = reader.readLine();
+            if (answer.toLowerCase().equals("n")) {
+                presenter.onStartBlackJackGame();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void println(String message) {
