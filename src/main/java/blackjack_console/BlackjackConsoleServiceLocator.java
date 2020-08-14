@@ -9,10 +9,10 @@ import blackjack_core.GameScreenContract;
 public class BlackjackConsoleServiceLocator {
 
     BlackjackGame.Controller getController() {
-        final GameScreenContract.View view = new ConsoleGameScreenView();
         final Dealer dealer = new Dealer();
         final Game game = new Game(dealer);
         final GameScreenContract.Presenter presenter = new GamePresenter(game);
+        final GameScreenContract.View view = new ConsoleGameScreenView(presenter);
         presenter.bind(view);
 
         return new BlackjackController(presenter);
