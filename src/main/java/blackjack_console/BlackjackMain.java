@@ -1,20 +1,14 @@
 package blackjack_console;
 
-import blackjack_core.Dealer;
-import blackjack_core.Game;
-import blackjack_core.GamePresenter;
-import blackjack_core.GameScreenContract;
+import blackjack_core.BlackjackGame;
 
 public class BlackjackMain {
 
     public static void main(String[] args) {
-        final GameScreenContract.View view = new ConsoleGameScreenView();
-        final Dealer dealer = new Dealer();
-        final Game game = new Game(dealer);
-        final GameScreenContract.Presenter presenter = new GamePresenter(game);
-        presenter.bind(view);
+        final BlackjackConsoleServiceLocator serviceLocator = new BlackjackConsoleServiceLocator();
+        final BlackjackGame.Controller controller = serviceLocator.getController();
 
-        presenter.onStartScreen();
+        controller.startGame();
     }
 }
 
