@@ -74,6 +74,6 @@ public class GamePresenter implements GameScreenContract.Presenter {
 
     @Override
     public void unbind() {
-
+        view = null;
     }
 }
