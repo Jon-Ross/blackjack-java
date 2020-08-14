@@ -11,9 +11,3 @@ public class BlackjackMain {
         controller.startGame();
     }
 }
-
-/*
- 1. Create something to implement View
- 2. Connect View and Presenter via bind()
- 3. Start game
- */
