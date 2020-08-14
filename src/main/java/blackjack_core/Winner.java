@@ -1,6 +1,6 @@
 package blackjack_core;
 
-enum Winner {
+public enum Winner {
     HOUSE,
     PLAYER
 }
