@@ -296,4 +296,9 @@ public class GameScreenIntegrationTest {
 
     // TODO:
     // 1. think about refactoring - like single view alert(String message) method?
+    // a. instruction messages
+    // b. user actions
+    // c. hand format
+    // d. key messages
+    // e. secondary messages
 }

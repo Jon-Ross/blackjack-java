@@ -25,7 +25,7 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
 
     @Override
     public void showPlayerHand(Hand hand) {
-        println("Your hand is: " + hand);
+        showHandMessage("Your", hand);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
 
     @Override
     public void showHouseHand(Hand hand) {
-        println("House hand is: " + hand);
+        showHandMessage("House", hand);
     }
 
     @Override
@@ -105,5 +105,9 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
         for (int i = 0; i < spaceCount; i++) {
             print(" ");
         }
+    }
+
+    private void showHandMessage(String player, Hand hand) {
+        println(player + " hand is: " + hand.getCardValues() + ", Total is: " + hand.sum());
     }
 }

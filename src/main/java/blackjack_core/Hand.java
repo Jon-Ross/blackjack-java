@@ -30,6 +30,10 @@ public class Hand {
         return total;
     }
 
+    public List<Integer> getCardValues() {
+        return new ArrayList<>(cardValues);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
