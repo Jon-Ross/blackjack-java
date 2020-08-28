@@ -18,7 +18,7 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
 
     @Override
     public void showStartingInstructions(String instructions) {
-        println(instructions);
+        showInstructionsMessage(instructions);
 
         handleStartGame();
     }
@@ -30,17 +30,9 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
 
     @Override
     public void showGameInstructions(String instructions) {
-        println(instructions);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            final String answer = reader.readLine();
-            if (answer.toLowerCase().equals("s")) {
-                presenter.onStick();
-            } else if (answer.toLowerCase().equals("t")) {
-                presenter.onTwist();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        showInstructionsMessage(instructions);
+
+        handlePlayAction();
     }
 
     @Override
@@ -55,13 +47,6 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
         final int spaceCount = winnerSection.length() - winnerMessage.length() - 1;
 
         printWinnerMessage(winnerSection, winnerMessage, spaceCount);
-    }
-
-    @Override
-    public void showPlayAgainInstructions(String instructions) {
-        println(instructions);
-
-        handleStartGame();
     }
 
     @Override
@@ -85,12 +70,35 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
         }
     }
 
+    private void handlePlayAction() {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            final String answer = reader.readLine();
+            if (answer.toLowerCase().equals("s")) {
+                presenter.onStick();
+            } else if (answer.toLowerCase().equals("t")) {
+                presenter.onTwist();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showInstructionsMessage(String instructions) {
+        println("============================================");
+        println(instructions);
+        println("============================================");
+    }
+
     private void printWinnerMessage(String winnerSection, String winnerMessage, int spaceCount) {
         println(winnerSection);
         print(winnerMessage);
         addSpaces(spaceCount);
         println("*");
         println(winnerSection);
+    }
+
+    private void showHandMessage(String player, Hand hand) {
+        println(player + " hand is: " + hand.getCardValues() + ", Total is: " + hand.sum());
     }
 
     private void println(String message) {
@@ -105,9 +113,5 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
         for (int i = 0; i < spaceCount; i++) {
             print(" ");
         }
-    }
-
-    private void showHandMessage(String player, Hand hand) {
-        println(player + " hand is: " + hand.getCardValues() + ", Total is: " + hand.sum());
     }
 }

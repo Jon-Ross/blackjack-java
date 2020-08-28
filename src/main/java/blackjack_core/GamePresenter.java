@@ -34,7 +34,7 @@ public class GamePresenter implements GameScreenContract.Presenter {
             view.alertBust("You've gone bust!");
             view.showWinner(Winner.HOUSE);
             final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-            view.showPlayAgainInstructions(playAgainInstructions);
+            view.showStartingInstructions(playAgainInstructions);
         } else {
             final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
             view.showPlayerHand(playerHand);
@@ -64,7 +64,7 @@ public class GamePresenter implements GameScreenContract.Presenter {
         final Winner winner = game.determineWinner(houseHand, playerHand);
         view.showWinner(winner);
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        view.showPlayAgainInstructions(playAgainInstructions);
+        view.showStartingInstructions(playAgainInstructions);
     }
 
     @Override

@@ -8,7 +8,6 @@ public interface GameScreenContract {
         void showGameInstructions(final String instructions);
         void showHouseHand(final Hand hand);
         void showWinner(final Winner winner);
-        void showPlayAgainInstructions(final String instructions);
         void alertBust(final String alert);
         void alertHouseAction(final String alert);
     }

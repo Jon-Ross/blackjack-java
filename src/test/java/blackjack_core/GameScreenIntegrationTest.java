@@ -55,20 +55,17 @@ public class GameScreenIntegrationTest {
         houseHand.addValue(houseCard1);
         houseHand.addValue(houseCard2);
 
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-
         // when
         presenter.onStartScreen();
         presenter.onStartBlackJackGame();
         presenter.onStick();
 
         // then
-        verify(view).showStartingInstructions(startingInstructions);
+        verify(view, times(2)).showStartingInstructions(startingInstructions);
         verify(view).showPlayerHand(playerHand);
         verify(view).showGameInstructions(gameInstructions);
         verify(view).showHouseHand(houseHand);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 
     @Test
@@ -103,8 +100,6 @@ public class GameScreenIntegrationTest {
         houseHand.addValue(houseCard1);
         houseHand.addValue(houseCard2);
 
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-
         // when
         presenter.onStartScreen();
         presenter.onStartBlackJackGame();
@@ -120,7 +115,7 @@ public class GameScreenIntegrationTest {
 
         // then
         // onStartScreen
-        verify(view).showStartingInstructions(startingInstructions);
+        verify(view, times(2)).showStartingInstructions(startingInstructions);
         // onStartBlackJackGame
         // onTwist
         argument = ArgumentCaptor.forClass(Hand.class);
@@ -133,7 +128,6 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand);
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 
     @Test
@@ -168,15 +162,13 @@ public class GameScreenIntegrationTest {
         houseHand2.addValue(houseCard2);
         houseHand2.addValue(houseCard3);
 
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-
         // when
         presenter.onStartScreen();
         presenter.onStartBlackJackGame();
         presenter.onStick();
 
         // then
-        verify(view).showStartingInstructions(startingInstructions);
+        verify(view, times(2)).showStartingInstructions(startingInstructions);
         verify(view).showPlayerHand(playerHand);
         verify(view).showGameInstructions(gameInstructions);
 
@@ -192,7 +184,6 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand2);
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 
     @Test
@@ -216,8 +207,6 @@ public class GameScreenIntegrationTest {
         playerHandSecond.addValue(playerCard2);
         playerHandSecond.addValue(playerCard3);
 
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-
         // when
         presenter.onStartScreen();
         presenter.onStartBlackJackGame();
@@ -232,7 +221,7 @@ public class GameScreenIntegrationTest {
 
         // then
         // onStartScreen
-        verify(view).showStartingInstructions(startingInstructions);
+        verify(view, times(2)).showStartingInstructions(startingInstructions);
         // onStartBlackJackGame
         // onTwist
         argument = ArgumentCaptor.forClass(Hand.class);
@@ -242,7 +231,6 @@ public class GameScreenIntegrationTest {
         assertEquals(playerHandSecond, values.get(1));
         verify(view).alertBust("You've gone bust!");
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
     }
 
     @Test
@@ -290,14 +278,14 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand2);
         verify(view).alertBust("House has gone bust!");
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
 
     // TODO:
     // 1. think about refactoring - like single view alert(String message) method?
-    // a. instruction messages
-    // b. user actions
+    // a. instruction messages - DONE
+    // b. user actions - DONE
     // c. hand format
     // d. key messages
     // e. secondary messages

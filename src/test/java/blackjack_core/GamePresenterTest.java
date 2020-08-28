@@ -67,7 +67,7 @@ public class GamePresenterTest {
     }
 
     @Test
-    public void GivenPlayerHandBeatsHouseHand_WhenOnStick_ThenShowHouseHandAndShowPlayerWinsAndShowPlayAgainInstructions() {
+    public void GivenPlayerHandBeatsHouseHand_WhenOnStick_ThenShowHouseHandAndShowPlayerWinsAndshowStartingInstructions() {
         // given
         final int playerCard1 = 10;
         final int playerCard2 = 9;
@@ -96,11 +96,11 @@ public class GamePresenterTest {
         verify(view).showHouseHand(houseHand);
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
     @Test
-    public void GivenHouseHandBeatsPlayerHand_WhenOnStick_ThenShowHouseHandAndShowHouseWinsAndShowPlayAgainInstructions() {
+    public void GivenHouseHandBeatsPlayerHand_WhenOnStick_ThenShowHouseHandAndShowHouseWinsAndshowStartingInstructions() {
         // given
         final int playerCard1 = 10;
         final int playerCard2 = 9;
@@ -129,7 +129,7 @@ public class GamePresenterTest {
         verify(view).showHouseHand(houseHand);
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class GamePresenterTest {
         assertEquals(houseHand2, values.get(1));
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
     @Test
@@ -263,7 +263,7 @@ public class GamePresenterTest {
         verify(view, times(2)).alertHouseAction("House value is less than 17.\nHouse Twists.");
         verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
     @Test
@@ -299,7 +299,7 @@ public class GamePresenterTest {
         verify(view).alertBust("You've gone bust!");
         verify(view).showWinner(Winner.HOUSE);
         final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
     @Test
@@ -346,7 +346,7 @@ public class GamePresenterTest {
         verify(view).showHouseHand(houseHand2);
         verify(view).alertBust("House has gone bust!");
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showPlayAgainInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(playAgainInstructions);
     }
 
 
