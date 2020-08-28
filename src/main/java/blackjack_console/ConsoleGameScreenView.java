@@ -50,7 +50,11 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
 
     @Override
     public void showWinner(Winner winner) {
-        println("Winner is: " + winner);
+        String winnerSection = "     ********************************";
+        String winnerMessage = "     * Winner is: " + winner;
+        final int spaceCount = winnerSection.length() - winnerMessage.length() - 1;
+
+        printWinnerMessage(winnerSection, winnerMessage, spaceCount);
     }
 
     @Override
@@ -81,7 +85,25 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
         }
     }
 
+    private void printWinnerMessage(String winnerSection, String winnerMessage, int spaceCount) {
+        println(winnerSection);
+        print(winnerMessage);
+        addSpaces(spaceCount);
+        println("*");
+        println(winnerSection);
+    }
+
     private void println(String message) {
         System.out.println(message);
+    }
+
+    private void print(String winnerMessage) {
+        System.out.print(winnerMessage);
+    }
+
+    private void addSpaces(int spaceCount) {
+        for (int i = 0; i < spaceCount; i++) {
+            print(" ");
+        }
     }
 }
