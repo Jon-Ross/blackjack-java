@@ -50,12 +50,7 @@ public class ConsoleGameScreenView implements GameScreenContract.View {
     }
 
     @Override
-    public void alertBust(String alert) {
-        println(alert);
-    }
-
-    @Override
-    public void alertHouseAction(String alert) {
+    public void showAlert(String alert) {
         println(alert);
     }
 

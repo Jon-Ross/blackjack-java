@@ -126,7 +126,7 @@ public class GameScreenIntegrationTest {
         verify(view, times(2)).showGameInstructions(gameInstructions);
         // onStick
         verify(view).showHouseHand(houseHand);
-        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
+        verify(view).showAlert("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.PLAYER);
     }
 
@@ -180,9 +180,9 @@ public class GameScreenIntegrationTest {
         assertEquals(houseHand2, values.get(1));
 
         verify(view).showHouseHand(houseHand1);
-        verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
+        verify(view).showAlert("House value is less than 17.\nHouse Twists.");
         verify(view).showHouseHand(houseHand2);
-        verify(view).alertHouseAction("House value is at least 17.\nHouse Sticks.");
+        verify(view).showAlert("House value is at least 17.\nHouse Sticks.");
         verify(view).showWinner(Winner.HOUSE);
     }
 
@@ -229,7 +229,7 @@ public class GameScreenIntegrationTest {
         values = argument.getAllValues();
         assertEquals(2, values.size());
         assertEquals(playerHandSecond, values.get(1));
-        verify(view).alertBust("You've gone bust!");
+        verify(view).showAlert("You've gone bust!");
         verify(view).showWinner(Winner.HOUSE);
     }
 
@@ -274,19 +274,10 @@ public class GameScreenIntegrationTest {
         verify(view).showPlayerHand(playerHand);
 
         verify(view).showHouseHand(houseHand1);
-        verify(view).alertHouseAction("House value is less than 17.\nHouse Twists.");
+        verify(view).showAlert("House value is less than 17.\nHouse Twists.");
         verify(view).showHouseHand(houseHand2);
-        verify(view).alertBust("House has gone bust!");
+        verify(view).showAlert("House has gone bust!");
         verify(view).showWinner(Winner.PLAYER);
         verify(view).showStartingInstructions(playAgainInstructions);
     }
-
-
-    // TODO:
-    // 1. think about refactoring - like single view alert(String message) method?
-    // a. instruction messages - DONE
-    // b. user actions - DONE
-    // c. hand format
-    // d. key messages
-    // e. secondary messages
 }
