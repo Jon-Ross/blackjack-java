@@ -20,4 +20,14 @@ public interface GameScreenContract {
         void bind(final View view);
         void unbind();
     }
+
+    interface StringProvider {
+        String getGameInstructions();
+        String getStartingInstructions();
+        String getPlayAgainInstructions();
+        String getPlayerBustAlert();
+        String getUnderMinThresholdAlert();
+        String getHouseBustAlert();
+        String getHouseAtLeastThresholdAlert();
+    }
 }
