@@ -36,7 +36,8 @@ public class GamePresenter implements GameScreenContract.Presenter {
         if (game.isBust(playerHand)) {
             view.showPlayerHand(playerHand);
             final String playerBustAlert = stringProvider.getPlayerBustAlert();
-            view.showAlert("You've gone bust!");
+//            String playerBustAlert = "You've gone bust!";
+            view.showAlert(playerBustAlert);
             view.showWinner(Winner.HOUSE);
             final String playAgainInstructions = stringProvider.getPlayAgainInstructions();
 //            final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
@@ -55,7 +56,7 @@ public class GamePresenter implements GameScreenContract.Presenter {
         view.showHouseHand(houseHand);
         while (game.isUnderMinThreshold(houseHand)) {
             final String underMinThresholdAlert = stringProvider.getUnderMinThresholdAlert();
-            final String alert = "House value is less than 17.\nHouse Twists.";
+//            final String alert = "House value is less than 17.\nHouse Twists.";
             view.showAlert(underMinThresholdAlert);
 
             // created new object for test purposes
@@ -66,10 +67,12 @@ public class GamePresenter implements GameScreenContract.Presenter {
         }
         if (game.isBust(houseHand)) {
             final String houseBustAlert = stringProvider.getHouseBustAlert();
-            view.showAlert("House has gone bust!");
+//            final String houseBustAlert = "House has gone bust!";
+            view.showAlert(houseBustAlert);
         } else {
             final String houseAtLeastThresholdAlert = stringProvider.getHouseAtLeastThresholdAlert();
-            view.showAlert("House value is at least 17.\nHouse Sticks.");
+//            String houseAtLeastThresholdAlert = "House value is at least 17.\nHouse Sticks.";
+            view.showAlert(houseAtLeastThresholdAlert);
         }
         final Winner winner = game.determineWinner(houseHand, playerHand);
         view.showWinner(winner);

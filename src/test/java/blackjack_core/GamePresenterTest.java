@@ -16,6 +16,12 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class GamePresenterTest {
 
     private static final String GAME_INSTRUCTIONS = "Stick and twist";
+    private static final String STARTING_INSTRUCTIONS = "Start a new blackjack game";
+    private static final String PLAY_AGAIN_INSTRUCTIONS = "Play a new blackjack game";
+    private static final String HOUSE_VALUE_IS_AT_LEAST_THRESHOLD = "House value is at least threshold";
+    private static final String HOUSE_UNDER_MIN_THRESHOLD_ALERT = "House value is less than 17. House Twists.";
+    private static final String PLAYER_BUST_ALERT = "You're bust!";
+    private static final String HOUSE_BUST_ALERT = "House bust!";
 
     @Mock
     private GameScreenContract.View view;
@@ -36,26 +42,29 @@ public class GamePresenterTest {
         presenter.bind(view);
 
         when(game.isBust(any(Hand.class))).thenReturn(false);
+
+        when(stringProvider.getStartingInstructions()).thenReturn(STARTING_INSTRUCTIONS);
+        when(stringProvider.getGameInstructions()).thenReturn(GAME_INSTRUCTIONS);
+        when(stringProvider.getPlayAgainInstructions()).thenReturn(PLAY_AGAIN_INSTRUCTIONS);
+        when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
+        when(stringProvider.getUnderMinThresholdAlert()).thenReturn(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
+        when(stringProvider.getPlayerBustAlert()).thenReturn(PLAYER_BUST_ALERT);
+        when(stringProvider.getHouseBustAlert()).thenReturn(HOUSE_BUST_ALERT);
     }
 
     @Test
     public void GivenNewGame_WhenOnStartScreen_ThenShowStartingInstructions() {
         // given
-        final String startingInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getStartingInstructions()).thenReturn(startingInstructions);
-
         // when
         presenter.onStartScreen();
 
         // then
-        verify(view).showStartingInstructions(startingInstructions);
+        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
     }
 
     @Test
     public void WhenOnStartBlackJackGame_ThenShowPlayerHandAndShowGameInstructions() {
         // given
-        when(stringProvider.getGameInstructions()).thenReturn(GAME_INSTRUCTIONS);
-
         final int playerCard1 = 8;
         final int playerCard2 = 9;
         final Hand playerHand = new Hand();
@@ -75,11 +84,6 @@ public class GamePresenterTest {
     @Test
     public void GivenPlayerHandBeatsHouseHand_WhenOnStick_ThenShowHouseHandAndShowPlayerWinsAndshowStartingInstructions() {
         // given
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(playAgainInstructions);
-        final String houseAtLeastThresholdAlert = "House value is at least 17.\nHouse Sticks.";
-        when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(houseAtLeastThresholdAlert);
-
         final int playerCard1 = 10;
         final int playerCard2 = 9;
         final Hand playerHand = new Hand();
@@ -103,19 +107,14 @@ public class GamePresenterTest {
 
         // then
         verify(view).showHouseHand(houseHand);
-        verify(view).showAlert(houseAtLeastThresholdAlert);
+        verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenHouseHandBeatsPlayerHand_WhenOnStick_ThenShowHouseHandAndShowHouseWinsAndshowStartingInstructions() {
         // given
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(playAgainInstructions);
-        final String houseAtLeastThresholdAlert = "House value is at least 17.\nHouse Sticks.";
-        when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(houseAtLeastThresholdAlert);
-
         final int playerCard1 = 10;
         final int playerCard2 = 9;
         final Hand playerHand = new Hand();
@@ -139,16 +138,14 @@ public class GamePresenterTest {
 
         // then
         verify(view).showHouseHand(houseHand);
-        verify(view).showAlert(houseAtLeastThresholdAlert);
+        verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void WhenOnTwist_ThenShowPlayerHandAndShowGameInstructions() {
         // given
-        when(stringProvider.getGameInstructions()).thenReturn(GAME_INSTRUCTIONS);
-
         final int playerCard1 = 10;
         final int playerCard2 = 3;
         final Hand playerHand1 = new Hand();
@@ -181,13 +178,6 @@ public class GamePresenterTest {
     @Test
     public void GivenPlayerSticksWithLosingHandAndHouseTwists_WhenGamePlayed_ThenHouseDeclaredWinner() {
         // given
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(playAgainInstructions);
-        final String houseUnderMinThresholdAlert = "House value is less than 17.\nHouse Twists.";
-        when(stringProvider.getUnderMinThresholdAlert()).thenReturn(houseUnderMinThresholdAlert);
-        final String houseAtLeastThresholdAlert = "House value is at least 17.\nHouse Sticks.";
-        when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(houseAtLeastThresholdAlert);
-
         final int playerCard1 = 10;
         final int playerCard2 = 5;
         final Hand playerHand = new Hand();
@@ -223,23 +213,16 @@ public class GamePresenterTest {
         assertEquals(2, values.size());
 
         assertEquals(houseHand1, values.get(0));
-        verify(view).showAlert(houseUnderMinThresholdAlert);
+        verify(view).showAlert(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
         assertEquals(houseHand2, values.get(1));
-        verify(view).showAlert(houseAtLeastThresholdAlert);
+        verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenPlayerSticksWithWinningHandAndHouseTwistsTwiceAboveThreshold_WhenGamePlayed_ThenPlayerDeclaredWinner() {
         // given
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(playAgainInstructions);
-        final String houseUnderMinThresholdAlert = "House value is less than 17.\nHouse Twists.";
-        when(stringProvider.getUnderMinThresholdAlert()).thenReturn(houseUnderMinThresholdAlert);
-        final String houseAtLeastThresholdAlert = "House value is at least 17.\nHouse Sticks.";
-        when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(houseAtLeastThresholdAlert);
-
         final int playerCard1 = 10;
         final int playerCard2 = 8;
         final Hand playerHand = new Hand();
@@ -284,20 +267,15 @@ public class GamePresenterTest {
         assertEquals(houseHand1, values.get(0));
         assertEquals(houseHand2, values.get(1));
         assertEquals(houseHand3, values.get(2));
-        verify(view, times(2)).showAlert(houseUnderMinThresholdAlert);
-        verify(view).showAlert(houseAtLeastThresholdAlert);
+        verify(view, times(2)).showAlert(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
+        verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenPlayerDealtCardOverBustThreshold_WhenOnTwist_ThenPlayerBust() {
         // given
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(playAgainInstructions);
-        final String playerBustAlert = "You've gone bust!";
-        when(stringProvider.getPlayerBustAlert()).thenReturn(playerBustAlert);
-
         final int playerCard1 = 10;
         final int playerCard2 = 6;
         final Hand playerHand1 = new Hand();
@@ -325,22 +303,14 @@ public class GamePresenterTest {
         assertEquals(2, values.size());
         assertEquals(playerHand1, values.get(0));
         assertEquals(playerHand2, values.get(1));
-        verify(view).showAlert(playerBustAlert);
+        verify(view).showAlert(PLAYER_BUST_ALERT);
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenHouseTwists_WhenOnStick_ThenHouseIsBust() {
         // given
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(playAgainInstructions);
-        when(stringProvider.getGameInstructions()).thenReturn(GAME_INSTRUCTIONS);
-        final String houseUnderMinThresholdAlert = "House value is at least 17.\nHouse Sticks.";
-        when(stringProvider.getUnderMinThresholdAlert()).thenReturn(houseUnderMinThresholdAlert);
-        final String houseBustAlert = "House has gone bust!";
-        when(stringProvider.getHouseBustAlert()).thenReturn(houseBustAlert);
-
         final int playerCard1 = 10;
         final int playerCard2 = 6;
         final Hand playerHand = new Hand();
@@ -377,11 +347,11 @@ public class GamePresenterTest {
         verify(view).showPlayerHand(playerHand);
 
         verify(view).showHouseHand(houseHand1);
-        verify(view).showAlert(houseUnderMinThresholdAlert);
+        verify(view).showAlert(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
         verify(view).showHouseHand(houseHand2);
-        verify(view).showAlert(houseBustAlert);
+        verify(view).showAlert(HOUSE_BUST_ALERT);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
 
