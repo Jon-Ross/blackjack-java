@@ -11,7 +11,8 @@ public class BlackjackConsoleServiceLocator {
     BlackjackGame.Controller getController() {
         final Dealer dealer = new Dealer();
         final Game game = new Game(dealer);
-        final GameScreenContract.Presenter presenter = new GamePresenter(game);
+        final GameScreenContract.StringProvider stringProvider = new ConsoleStringProvider();
+        final GameScreenContract.Presenter presenter = new GamePresenter(game, stringProvider);
         final GameScreenContract.View view = new ConsoleGameScreenView(presenter);
         presenter.bind(view);
 

@@ -3,25 +3,29 @@ package blackjack_core;
 public class GamePresenter implements GameScreenContract.Presenter {
 
     private final Game game;
+    private final GameScreenContract.StringProvider stringProvider;
 
     private GameScreenContract.View view;
 
     private Hand playerHand;
 
-    public GamePresenter(Game game) {
+    public GamePresenter(final Game game, final GameScreenContract.StringProvider stringProvider) {
         this.game = game;
+        this.stringProvider = stringProvider;
     }
 
     @Override
     public void onStartScreen() {
-        final String startingInstructions = "Press \"n\" to start a new blackjack game";
+        final String startingInstructions = stringProvider.getStartingInstructions();
+//        final String startingInstructions = "Press \"n\" to start a new blackjack game";
         view.showStartingInstructions(startingInstructions);
     }
 
     @Override
     public void onStartBlackJackGame() {
         playerHand = game.dealHand();
-        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
+        final String gameInstructions = stringProvider.getGameInstructions();
+//        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
         view.showPlayerHand(playerHand);
         view.showGameInstructions(gameInstructions);
     }
@@ -31,12 +35,15 @@ public class GamePresenter implements GameScreenContract.Presenter {
         playerHand.addValue(game.dealCard());
         if (game.isBust(playerHand)) {
             view.showPlayerHand(playerHand);
+            final String playerBustAlert = stringProvider.getPlayerBustAlert();
             view.showAlert("You've gone bust!");
             view.showWinner(Winner.HOUSE);
-            final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+            final String playAgainInstructions = stringProvider.getPlayAgainInstructions();
+//            final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
             view.showStartingInstructions(playAgainInstructions);
         } else {
-            final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
+            final String gameInstructions = stringProvider.getGameInstructions();
+//            final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
             view.showPlayerHand(playerHand);
             view.showGameInstructions(gameInstructions);
         }
@@ -47,8 +54,9 @@ public class GamePresenter implements GameScreenContract.Presenter {
         Hand houseHand = game.dealHand();
         view.showHouseHand(houseHand);
         while (game.isUnderMinThreshold(houseHand)) {
+            final String underMinThresholdAlert = stringProvider.getUnderMinThresholdAlert();
             final String alert = "House value is less than 17.\nHouse Twists.";
-            view.showAlert(alert);
+            view.showAlert(underMinThresholdAlert);
 
             // created new object for test purposes
             final Hand newHouseHand = new Hand(houseHand);
@@ -57,13 +65,16 @@ public class GamePresenter implements GameScreenContract.Presenter {
             view.showHouseHand(houseHand);
         }
         if (game.isBust(houseHand)) {
+            final String houseBustAlert = stringProvider.getHouseBustAlert();
             view.showAlert("House has gone bust!");
         } else {
+            final String houseAtLeastThresholdAlert = stringProvider.getHouseAtLeastThresholdAlert();
             view.showAlert("House value is at least 17.\nHouse Sticks.");
         }
         final Winner winner = game.determineWinner(houseHand, playerHand);
         view.showWinner(winner);
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
+        final String playAgainInstructions = stringProvider.getPlayAgainInstructions();
+//        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
         view.showStartingInstructions(playAgainInstructions);
     }
 

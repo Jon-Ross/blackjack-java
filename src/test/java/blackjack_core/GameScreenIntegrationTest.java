@@ -16,6 +16,9 @@ public class GameScreenIntegrationTest {
     @Mock
     private GameScreenContract.View view;
 
+    @Mock
+    private GameScreenContract.StringProvider stringProvider;
+
     private DealerMock dealer;
 
     private GameScreenContract.Presenter presenter;
@@ -26,7 +29,7 @@ public class GameScreenIntegrationTest {
 
         dealer = new DealerMock();
         Game game = new Game(dealer);
-        presenter = new GamePresenter(game);
+        presenter = new GamePresenter(game, stringProvider);
         presenter.bind(view);
     }
 
