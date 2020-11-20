@@ -13,6 +13,14 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class GameScreenIntegrationTest {
 
+    private static final String GAME_INSTRUCTIONS = "Stick and twist";
+    private static final String STARTING_INSTRUCTIONS = "Start a new blackjack game";
+    private static final String PLAY_AGAIN_INSTRUCTIONS = "Play a new blackjack game";
+    private static final String HOUSE_VALUE_IS_AT_LEAST_THRESHOLD = "House value is at least threshold";
+    private static final String HOUSE_UNDER_MIN_THRESHOLD_ALERT = "House value is less than 17. House Twists.";
+    private static final String PLAYER_BUST_ALERT = "You're bust!";
+    private static final String HOUSE_BUST_ALERT = "House bust!";
+
     @Mock
     private GameScreenContract.View view;
 
@@ -31,13 +39,19 @@ public class GameScreenIntegrationTest {
         Game game = new Game(dealer);
         presenter = new GamePresenter(game, stringProvider);
         presenter.bind(view);
+
+        when(stringProvider.getStartingInstructions()).thenReturn(STARTING_INSTRUCTIONS);
+        when(stringProvider.getGameInstructions()).thenReturn(GAME_INSTRUCTIONS);
+        when(stringProvider.getPlayAgainInstructions()).thenReturn(PLAY_AGAIN_INSTRUCTIONS);
+        when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
+        when(stringProvider.getUnderMinThresholdAlert()).thenReturn(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
+        when(stringProvider.getPlayerBustAlert()).thenReturn(PLAYER_BUST_ALERT);
+        when(stringProvider.getHouseBustAlert()).thenReturn(HOUSE_BUST_ALERT);
     }
 
     @Test
     public void GivenPlayerSticksWithAWinningHand_WhenGamePlayed_ThenPlayerDeclaredWinner() {
         // given
-        final String startingInstructions = "Press \"n\" to start a new blackjack game";
-
         final int playerCard1 = 10;
         final int playerCard2 = 11;
         dealer.addValue(playerCard1);
@@ -46,8 +60,6 @@ public class GameScreenIntegrationTest {
         final Hand playerHand = new Hand();
         playerHand.addValue(playerCard1);
         playerHand.addValue(playerCard2);
-
-        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
 
         final int houseCard1 = 9;
         final int houseCard2 = 10;
@@ -64,17 +76,17 @@ public class GameScreenIntegrationTest {
         presenter.onStick();
 
         // then
-        verify(view, times(2)).showStartingInstructions(startingInstructions);
+        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         verify(view).showPlayerHand(playerHand);
-        verify(view).showGameInstructions(gameInstructions);
+        verify(view).showGameInstructions(GAME_INSTRUCTIONS);
         verify(view).showHouseHand(houseHand);
         verify(view).showWinner(Winner.PLAYER);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenPlayerTwistsThenSticksWithAWinningHand_WhenGamePlayed_ThenPlayerDeclaredWinner() {
         // given
-        final String startingInstructions = "Press \"n\" to start a new blackjack game";
 
         final int playerCard1 = 5;
         final int playerCard2 = 9;
@@ -91,8 +103,6 @@ public class GameScreenIntegrationTest {
         playerHandSecond.addValue(playerCard1);
         playerHandSecond.addValue(playerCard2);
         playerHandSecond.addValue(playerCard3);
-
-        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
 
         final int houseCard1 = 9;
         final int houseCard2 = 10;
@@ -118,7 +128,7 @@ public class GameScreenIntegrationTest {
 
         // then
         // onStartScreen
-        verify(view, times(2)).showStartingInstructions(startingInstructions);
+        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         // onStartBlackJackGame
         // onTwist
         argument = ArgumentCaptor.forClass(Hand.class);
@@ -126,17 +136,17 @@ public class GameScreenIntegrationTest {
         values = argument.getAllValues();
         assertEquals(2, values.size());
         assertEquals(playerHandSecond, values.get(1));
-        verify(view, times(2)).showGameInstructions(gameInstructions);
+        verify(view, times(2)).showGameInstructions(GAME_INSTRUCTIONS);
         // onStick
         verify(view).showHouseHand(houseHand);
-        verify(view).showAlert("House value is at least 17.\nHouse Sticks.");
+        verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.PLAYER);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenPlayerSticksWithLosingHandAndHouseTwists_WhenGamePlayed_ThenHouseDeclaredWinner() {
         // given
-        final String startingInstructions = "Press \"n\" to start a new blackjack game";
 
         final int playerCard1 = 10;
         final int playerCard2 = 6;
@@ -146,8 +156,6 @@ public class GameScreenIntegrationTest {
         final Hand playerHand = new Hand();
         playerHand.addValue(playerCard1);
         playerHand.addValue(playerCard2);
-
-        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
 
         final int houseCard1 = 6;
         final int houseCard2 = 10;
@@ -171,9 +179,9 @@ public class GameScreenIntegrationTest {
         presenter.onStick();
 
         // then
-        verify(view, times(2)).showStartingInstructions(startingInstructions);
+        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         verify(view).showPlayerHand(playerHand);
-        verify(view).showGameInstructions(gameInstructions);
+        verify(view).showGameInstructions(GAME_INSTRUCTIONS);
 
         ArgumentCaptor<Hand> argument = ArgumentCaptor.forClass(Hand.class);
         verify(view, atLeastOnce()).showHouseHand(argument.capture());
@@ -183,17 +191,16 @@ public class GameScreenIntegrationTest {
         assertEquals(houseHand2, values.get(1));
 
         verify(view).showHouseHand(houseHand1);
-        verify(view).showAlert("House value is less than 17.\nHouse Twists.");
+        verify(view).showAlert(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
         verify(view).showHouseHand(houseHand2);
-        verify(view).showAlert("House value is at least 17.\nHouse Sticks.");
+        verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.HOUSE);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
     public void GivenPlayerTwists_WhenGamePlayed_ThenPlayerIsBust() {
         // given
-        final String startingInstructions = "Press \"n\" to start a new blackjack game";
-
         final int playerCard1 = 5;
         final int playerCard2 = 9;
         final int playerCard3 = 8;
@@ -224,7 +231,7 @@ public class GameScreenIntegrationTest {
 
         // then
         // onStartScreen
-        verify(view, times(2)).showStartingInstructions(startingInstructions);
+        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         // onStartBlackJackGame
         // onTwist
         argument = ArgumentCaptor.forClass(Hand.class);
@@ -232,8 +239,9 @@ public class GameScreenIntegrationTest {
         values = argument.getAllValues();
         assertEquals(2, values.size());
         assertEquals(playerHandSecond, values.get(1));
-        verify(view).showAlert("You've gone bust!");
+        verify(view).showAlert(PLAYER_BUST_ALERT);
         verify(view).showWinner(Winner.HOUSE);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 
     @Test
@@ -247,8 +255,6 @@ public class GameScreenIntegrationTest {
         final Hand playerHand = new Hand();
         playerHand.addValue(playerCard1);
         playerHand.addValue(playerCard2);
-
-        final String gameInstructions = "Press \"s\" to stick and \"t\" to twist";
 
         final int houseCard1 = 6;
         final int houseCard2 = 10;
@@ -266,21 +272,19 @@ public class GameScreenIntegrationTest {
         houseHand2.addValue(houseCard2);
         houseHand2.addValue(houseCard3);
 
-        final String playAgainInstructions = "Press \"n\" to start a new blackjack game";
-
         // when
         presenter.onStartBlackJackGame();
         presenter.onStick();
 
         // then
-        verify(view).showGameInstructions(gameInstructions);
+        verify(view).showGameInstructions(GAME_INSTRUCTIONS);
         verify(view).showPlayerHand(playerHand);
 
         verify(view).showHouseHand(houseHand1);
-        verify(view).showAlert("House value is less than 17.\nHouse Twists.");
+        verify(view).showAlert(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
         verify(view).showHouseHand(houseHand2);
-        verify(view).showAlert("House has gone bust!");
+        verify(view).showAlert(HOUSE_BUST_ALERT);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(playAgainInstructions);
+        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
     }
 }
