@@ -42,4 +42,22 @@ public class HandTest {
         // then
         assertEquals(11, sumResult);
     }
+
+    @Test
+    public void GivenValues_WhenToString_ThenShowValuesInBrackets() {
+        // given
+        hand.addValue(1);
+        hand.addValue(3);
+        // when
+        // then
+        assertEquals("[1, 3]", hand.toString());
+    }
+
+    @Test
+    public void GivenNoValues_WhenToString_ThenShowNoValues() {
+        // given
+        // when
+        // then
+        assertEquals("[]", hand.toString());
+    }
 }
