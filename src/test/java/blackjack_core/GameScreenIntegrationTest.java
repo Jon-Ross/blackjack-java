@@ -15,7 +15,6 @@ public class GameScreenIntegrationTest {
 
     private static final String GAME_INSTRUCTIONS = "Stick and twist";
     private static final String STARTING_INSTRUCTIONS = "Start a new blackjack game";
-    private static final String PLAY_AGAIN_INSTRUCTIONS = "Play a new blackjack game";
     private static final String HOUSE_VALUE_IS_AT_LEAST_THRESHOLD = "House value is at least threshold";
     private static final String HOUSE_UNDER_MIN_THRESHOLD_ALERT = "House value is less than 17. House Twists.";
     private static final String PLAYER_BUST_ALERT = "You're bust!";
@@ -42,7 +41,6 @@ public class GameScreenIntegrationTest {
 
         when(stringProvider.getStartingInstructions()).thenReturn(STARTING_INSTRUCTIONS);
         when(stringProvider.getGameInstructions()).thenReturn(GAME_INSTRUCTIONS);
-        when(stringProvider.getPlayAgainInstructions()).thenReturn(PLAY_AGAIN_INSTRUCTIONS);
         when(stringProvider.getHouseAtLeastThresholdAlert()).thenReturn(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         when(stringProvider.getUnderMinThresholdAlert()).thenReturn(HOUSE_UNDER_MIN_THRESHOLD_ALERT);
         when(stringProvider.getPlayerBustAlert()).thenReturn(PLAYER_BUST_ALERT);
@@ -76,12 +74,11 @@ public class GameScreenIntegrationTest {
         presenter.onStick();
 
         // then
-        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         verify(view).showPlayerHand(playerHand);
         verify(view).showGameInstructions(GAME_INSTRUCTIONS);
         verify(view).showHouseHand(houseHand);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
+        verify(view, times(2)).showStartingInstructions(STARTING_INSTRUCTIONS);
     }
 
     @Test
@@ -128,7 +125,6 @@ public class GameScreenIntegrationTest {
 
         // then
         // onStartScreen
-        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         // onStartBlackJackGame
         // onTwist
         argument = ArgumentCaptor.forClass(Hand.class);
@@ -141,7 +137,7 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand);
         verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
+        verify(view, times(2)).showStartingInstructions(STARTING_INSTRUCTIONS);
     }
 
     @Test
@@ -179,7 +175,6 @@ public class GameScreenIntegrationTest {
         presenter.onStick();
 
         // then
-        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         verify(view).showPlayerHand(playerHand);
         verify(view).showGameInstructions(GAME_INSTRUCTIONS);
 
@@ -195,7 +190,7 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand2);
         verify(view).showAlert(HOUSE_VALUE_IS_AT_LEAST_THRESHOLD);
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
+        verify(view, times(2)).showStartingInstructions(STARTING_INSTRUCTIONS);
     }
 
     @Test
@@ -231,7 +226,6 @@ public class GameScreenIntegrationTest {
 
         // then
         // onStartScreen
-        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
         // onStartBlackJackGame
         // onTwist
         argument = ArgumentCaptor.forClass(Hand.class);
@@ -241,7 +235,7 @@ public class GameScreenIntegrationTest {
         assertEquals(playerHandSecond, values.get(1));
         verify(view).showAlert(PLAYER_BUST_ALERT);
         verify(view).showWinner(Winner.HOUSE);
-        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
+        verify(view, times(2)).showStartingInstructions(STARTING_INSTRUCTIONS);
     }
 
     @Test
@@ -285,6 +279,6 @@ public class GameScreenIntegrationTest {
         verify(view).showHouseHand(houseHand2);
         verify(view).showAlert(HOUSE_BUST_ALERT);
         verify(view).showWinner(Winner.PLAYER);
-        verify(view).showStartingInstructions(PLAY_AGAIN_INSTRUCTIONS);
+        verify(view).showStartingInstructions(STARTING_INSTRUCTIONS);
     }
 }

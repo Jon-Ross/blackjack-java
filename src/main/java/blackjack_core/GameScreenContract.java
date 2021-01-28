@@ -24,7 +24,6 @@ public interface GameScreenContract {
     interface StringProvider {
         String getGameInstructions();
         String getStartingInstructions();
-        String getPlayAgainInstructions();
         String getPlayerBustAlert();
         String getUnderMinThresholdAlert();
         String getHouseBustAlert();

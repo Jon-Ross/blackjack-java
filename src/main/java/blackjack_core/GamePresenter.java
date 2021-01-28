@@ -36,7 +36,7 @@ public class GamePresenter implements GameScreenContract.Presenter {
             final String playerBustAlert = stringProvider.getPlayerBustAlert();
             view.showAlert(playerBustAlert);
             view.showWinner(Winner.HOUSE);
-            final String playAgainInstructions = stringProvider.getPlayAgainInstructions();
+            final String playAgainInstructions = stringProvider.getStartingInstructions();
             view.showStartingInstructions(playAgainInstructions);
         } else {
             final String gameInstructions = stringProvider.getGameInstructions();
@@ -68,7 +68,7 @@ public class GamePresenter implements GameScreenContract.Presenter {
         }
         final Winner winner = game.determineWinner(houseHand, playerHand);
         view.showWinner(winner);
-        final String playAgainInstructions = stringProvider.getPlayAgainInstructions();
+        final String playAgainInstructions = stringProvider.getStartingInstructions();
         view.showStartingInstructions(playAgainInstructions);
     }
 
